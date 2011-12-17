@@ -1,0 +1,6 @@
+<jboss-web>
+
+ <context-root>/flux</context-root>
+
+  
+</jboss-web>
