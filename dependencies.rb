@@ -13,3 +13,4 @@ SPRING = struct(
 	:web =>"org.springframework:spring-web:jar:#{SPRING_VERSION}",
 	:webmvc =>"org.springframework:spring-webmvc:jar:#{SPRING_VERSION}"
 	)
+LOG4J = "log4j:log4j:jar:#{LOG4J_VERSION}" 
