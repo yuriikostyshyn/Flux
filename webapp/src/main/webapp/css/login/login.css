@@ -1,0 +1,28 @@
+#login_screen form input {
+	float: right;
+	margin-bottom: 10px;
+}
+
+#login_screen form a {
+	float: right;
+	margin-bottom: 10px;
+	color: blue;
+}
+
+.ui-dialog-titlebar {
+	display: none;
+}
+
+.ui-resizable-handle {
+	display: none;
+}
+
+#login_screen form label {
+	float: left;
+	padding-top: 3px;
+	width: 126px;
+}
+
+#login_screen form #login_submit {
+	margin-left: 100px;
+}
