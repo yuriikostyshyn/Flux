@@ -8,6 +8,17 @@
 	<!-- <context-param> <param-name>contexConfigLocation</param-name> <param-value>/WEB-INF/spring/flux/applicationContext.xml</param-value> 
 		</context-param> -->
 
+	<filter>
+		<filter-name>loginFilter</filter-name>
+		<filter-class>com.flux.filters.LoginFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
+
 	<servlet>
 		<servlet-name>flux</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
