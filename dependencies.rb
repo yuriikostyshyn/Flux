@@ -14,3 +14,4 @@ SPRING = struct(
 	:webmvc =>"org.springframework:spring-webmvc:jar:#{SPRING_VERSION}"
 	)
 LOG4J = "log4j:log4j:jar:#{LOG4J_VERSION}" 
+SERVLET_API = "javax.servlet:servlet-api:jar:#{SERVLET_API_VERSION}"
