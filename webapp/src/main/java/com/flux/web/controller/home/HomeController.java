@@ -17,7 +17,7 @@ public class HomeController {
 	public String showHomeScreen(HttpServletRequest request) {
 		LOGGER.debug("Home page");
 		request.setAttribute("user", request.getSession().getAttribute("user"));
-		return "homepage";
+		return "homepage/homepage";
 	}
 
 }
