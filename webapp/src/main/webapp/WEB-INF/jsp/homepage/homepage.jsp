@@ -3,7 +3,7 @@
 <table width="100%" height="100%" >
 	<tr>
 		<td width="20%">
-			<h4 align="center">Hello ${user.name} ${user.surname}!</h4>
+			<h4 align="center" style="margin: 10px;">Hello ${user.name} ${user.surname}!</h4>
 		</td>
 		<td align="center" valign="middle" width="80%">
 			<h1 style="margin: 10px;">Welcome on FLUX Money Transaction System</h1>
