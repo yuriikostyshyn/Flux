@@ -1,1 +1,1 @@
-Hello World!
+<jsp:forward page="/login.do" />
