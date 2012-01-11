@@ -4,3 +4,4 @@ bin
 .classpath
 /persistance/.settings
 /webapp/.settings
+/persistence/.settings
