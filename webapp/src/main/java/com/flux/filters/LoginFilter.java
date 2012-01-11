@@ -16,6 +16,10 @@ import org.apache.log4j.Logger;
 
 public class LoginFilter implements Filter {
 
+	private static final String USER_PARAMETR = "user";
+	private static final String FLUX_LOGIN_DO = "/flux/login.do";
+	private static final String FLUX_HOME_DO = "/flux/home.do";
+	private static final String LOGIN_DO = "login.do";
 	private static final Logger LOGGER = Logger.getLogger(LoginFilter.class);
 
 	@Override
@@ -30,13 +34,13 @@ public class LoginFilter implements Filter {
 		final HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		final HttpSession httpSession = httpServletRequest.getSession();
 		final boolean isLoginUri = httpServletRequest.getRequestURI().endsWith(
-				"login.do");
-		final boolean isLoginedUser = httpSession.getAttribute("user") != null;
+				LOGIN_DO);
+		final boolean isLoginedUser = httpSession.getAttribute(USER_PARAMETR) != null;
 		LOGGER.debug("URI:" + httpServletRequest.getRequestURI());
 		if (isLoginUri && isLoginedUser) {
-			httpServletResponse.sendRedirect("/flux/home.do");
+			httpServletResponse.sendRedirect(FLUX_HOME_DO);
 		} else if (!isLoginUri && !isLoginedUser) {
-			httpServletResponse.sendRedirect("/flux/login.do");
+			httpServletResponse.sendRedirect(FLUX_LOGIN_DO);
 		} else {
 			chain.doFilter(request, response);
 		}

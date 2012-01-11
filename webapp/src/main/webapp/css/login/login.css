@@ -24,5 +24,6 @@
 }
 
 #login_screen form #login_submit {
-	margin-left: 100px;
+	margin-left: 300px;
+	width: 80px;
 }

@@ -15,6 +15,10 @@ import com.flux.provider.UserProvider;
 @RequestMapping("/login.do")
 public class LoginController {
 
+	private static final String REDIRECT_HOME_DO = "redirect:/home.do";
+	private static final String LOGIN_JSP = "login/login";
+	private static final String USER_PARAMETR = "user";
+
 	private UserProvider userProvider;
 
 	private static final Logger LOGGER = Logger
@@ -22,18 +26,18 @@ public class LoginController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showLoginScreen() {
-		return "login/login";
+		return LOGIN_JSP;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String login(String login, String password, HttpSession session) {
 
-		String returnString = "login/login";
+		String returnString = LOGIN_JSP;
 		User user = userProvider.getUserByLoginAndPassword(login, password);
 		if (user != null) {
-			session.setAttribute("user", user);
+			session.setAttribute(USER_PARAMETR, user);
 			LOGGER.debug("User " + user + " loggined");
-			returnString = "redirect:/home.do";
+			returnString = REDIRECT_HOME_DO;
 		}
 		return returnString;
 	}

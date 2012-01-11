@@ -24,7 +24,7 @@
         <form action="login.do" method="post">
             <label> Login: </label> <input type="text" maxlength="40" name="login" id="login" /> <br> <label> Password: </label> <input id="password" type="password"
                 maxlength="40" name="password" /> <br>
-            <a href="#">Forgot your password</a><input id="login_submit" type="submit" name="Login" />
+            <a href="#">Forgot your password</a><input id="login_submit" type="submit" name="Login" value = 'OK' >
         </form>
     </div>
 </body>
