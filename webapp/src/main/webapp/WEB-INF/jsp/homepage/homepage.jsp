@@ -18,7 +18,7 @@
 				<br/>
 				<input type="submit" value="Help" class="main-page-button"/>
 				<br/>
-				<input type="button" value="Exit" class="main-page-button"/>			
+				<input type="button" value="Exit" class="main-page-button" onclick="logout()"/>			
 			</form>
 		</td>
 		<td width="80%">
