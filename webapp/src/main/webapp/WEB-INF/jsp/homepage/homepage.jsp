@@ -1,4 +1,6 @@
+<head>
 <%@ include file="homePageInclude.jsp"%>
+</head>
 <div style="margin: 10px, 10px, 10px, 5px;">
 <table width="100%" height="100%" >
 	<tr>
@@ -18,7 +20,10 @@
 				<br/>
 				<input type="submit" value="Help" class="main-page-button"/>
 				<br/>
-				<input type="button" value="Exit" class="main-page-button" onclick="logout()"/>			
+				<input type="button" value="Exit" id="logout-button" class="main-page-button"/>	
+				<div id="dialog">
+					<p class="logout-dialog-paragraph">Are you really going to leave FLUX?</p>
+				</div>				
 			</form>
 		</td>
 		<td width="80%">
