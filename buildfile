@@ -27,13 +27,14 @@ end
 define 'persistence' do
 	project.version = '1.0.0'
 	project.group = 'com.flux'
+	compile.with PERSISTENCE_API
 	package :jar
 end
 
 define 'webapp' do
 	project.version = FLUX_VERSION
 	project.group = 'com.flux'
-	compile.with COMMONS_LOGGING, MOCKITO, SPRING, LOG4J, SERVLET_API, projects('domain')
+	compile.with COMMONS_LOGGING, MOCKITO, SPRING, LOG4J, SERVLET_API, projects('domain'), projects('persistence')
 	package :war
 	task :deploy => :compile do
 		system 'COPY "webapp\target\*.war" "%JBOSS_HOME%\standalone\deployments\"'

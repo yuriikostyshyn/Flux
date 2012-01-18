@@ -15,3 +15,5 @@ SPRING = struct(
 	)
 LOG4J = "log4j:log4j:jar:#{LOG4J_VERSION}" 
 SERVLET_API = "javax.servlet:servlet-api:jar:#{SERVLET_API_VERSION}"
+PERSISTENCE_API = "javax.persistence:persistence-api:jar:#{PERSISTENCE_API_VERSION}"
+HIBERNATE = "org.hibernate:hibernate-core:jar:#{HIBERNATE_VERSION}"
