@@ -34,7 +34,8 @@ end
 define 'webapp' do
 	project.version = FLUX_VERSION
 	project.group = 'com.flux'
-	compile.with COMMONS_LOGGING, MOCKITO, SPRING, LOG4J, SERVLET_API, projects('domain'), projects('persistence')
+	compile.with COMMONS_LOGGING, SPRING, LOG4J, SERVLET_API, projects('domain'), projects('persistence')
+	test.with MOCKITO
 	package :war
 	task :deploy => :compile do
 		system 'COPY "webapp\target\*.war" "%JBOSS_HOME%\standalone\deployments\"'

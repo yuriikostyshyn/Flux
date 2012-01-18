@@ -1,5 +1,6 @@
 target
 bin
+reports
 .project
 .classpath
 /persistance/.settings

@@ -2,12 +2,10 @@
 <html>
 <head>
 <title>Flux login screen</title>
-<script type="text/javascript" src="js/jquery/jquery-1.6.2.min.js"></script>
-<script type="text/javascript"
-	src="js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
-<link type="text/css" href="css/jquery/jquery-ui-1.8.16.custom.css"
-	rel="stylesheet" />
-<link type="text/css" href="css/login/login.css" rel="stylesheet" />
+<script type="text/javascript" src="layout/js/jquery/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="layout/js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
+<link type="text/css" href="layout/css/jquery/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+<link type="text/css" href="layout/css/login/login.css" rel="stylesheet" />
 
 <script>
 	$(function() {
