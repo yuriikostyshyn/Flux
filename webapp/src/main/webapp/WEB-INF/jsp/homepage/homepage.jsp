@@ -16,6 +16,8 @@
 			<form style="height:80%">
 				<input type="submit" value="Accounts" class="main-page-button"/>
 				<br/>
+				<input type="submit" value="Transactions" class="main-page-button"/>
+				<br/>
 				<input type="submit" value="Settings" class="main-page-button"/>
 				<br/>
 				<input type="submit" value="Help" class="main-page-button"/>
