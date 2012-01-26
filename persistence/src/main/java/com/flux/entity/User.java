@@ -15,14 +15,17 @@ import java.util.List;
  * 
  */
 @Entity
+@NamedQueries ({
+	@NamedQuery(name="userByLoginPass", query="SELECT u FROM User WHERE u.login=? AND u.password=?")
+})
 @Table(name="user")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private String idUser;
+	private String id;
 
-	private BigInteger keyBank;
+	private String securityKey;
 
 	private String login;
 
@@ -39,20 +42,21 @@ public class User implements Serializable {
     public User() {
     }
 
-	public String getIdUser() {
-		return this.idUser;
+	public String getId() {
+		return this.id;
 	}
 
-	public void setIdUser(String idUser) {
-		this.idUser = idUser;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public BigInteger getKeyBank() {
-		return this.keyBank;
+	@Column(name="")
+	public String getSecurityKey() {
+		return securityKey;
 	}
 
-	public void setKeyBank(BigInteger keyBank) {
-		this.keyBank = keyBank;
+	public void setSecurityKey(String securityKey) {
+		this.securityKey = securityKey;
 	}
 
 	public String getLogin() {
