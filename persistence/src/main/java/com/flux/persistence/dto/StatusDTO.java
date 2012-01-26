@@ -1,4 +1,4 @@
-package com.flux.entity;
+package com.flux.persistence.dto;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="status")
-public class Status implements Serializable {
+public class StatusDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -23,9 +23,9 @@ public class Status implements Serializable {
 
 	//bi-directional many-to-one association to Transaction
 	@OneToMany(mappedBy="status")
-	private List<Transaction> transactions;
+	private List<TransactionDTO> transactions;
 
-    public Status() {
+    public StatusDTO() {
     }
 
 	public int getIdStatus() {
@@ -44,11 +44,11 @@ public class Status implements Serializable {
 		this.message = message;
 	}
 
-	public List<Transaction> getTransactions() {
+	public List<TransactionDTO> getTransactions() {
 		return this.transactions;
 	}
 
-	public void setTransactions(List<Transaction> transactions) {
+	public void setTransactions(List<TransactionDTO> transactions) {
 		this.transactions = transactions;
 	}
 	

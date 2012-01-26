@@ -1,4 +1,4 @@
-package com.flux.entity;
+package com.flux.persistence.dto;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -8,7 +8,7 @@ import javax.persistence.*;
  * 
  */
 @Embeddable
-public class AccountPK implements Serializable {
+public class AccountPKDTO implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
@@ -16,7 +16,7 @@ public class AccountPK implements Serializable {
 
 	private int idCurrency;
 
-    public AccountPK() {
+    public AccountPKDTO() {
     }
 	public String getIdAccount() {
 		return this.idAccount;
@@ -35,10 +35,10 @@ public class AccountPK implements Serializable {
 		if (this == other) {
 			return true;
 		}
-		if (!(other instanceof AccountPK)) {
+		if (!(other instanceof AccountPKDTO)) {
 			return false;
 		}
-		AccountPK castOther = (AccountPK)other;
+		AccountPKDTO castOther = (AccountPKDTO)other;
 		return 
 			this.idAccount.equals(castOther.idAccount)
 			&& (this.idCurrency == castOther.idCurrency);

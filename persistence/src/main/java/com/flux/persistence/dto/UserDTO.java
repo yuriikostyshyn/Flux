@@ -1,25 +1,20 @@
-package com.flux.entity;
+package com.flux.persistence.dto;
 
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.flux.entity.Account;
+import com.flux.persistence.dto.AccountDTO;
 
-
-import java.math.BigInteger;
 import java.util.List;
-
 
 /**
  * The persistent class for the user database table.
  * 
  */
 @Entity
-@NamedQueries ({
-	@NamedQuery(name="userByLoginPass", query="SELECT u FROM User WHERE u.login=? AND u.password=?")
-})
-@Table(name="user")
-public class User implements Serializable {
+@NamedQueries({ @NamedQuery(name = "userByLoginPass", query = "FROM UserDTO u WHERE u.login=? AND u.password=?") })
+@Table(name = "user")
+public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -35,22 +30,24 @@ public class User implements Serializable {
 
 	private String surname;
 
-	//bi-directional many-to-one association to Account
-	@OneToMany(mappedBy="user")
-	private List<Account> accounts;
+	// bi-directional many-to-one association to Account
+	@OneToMany(mappedBy = "user")
+	private List<AccountDTO> accounts;
 
-    public User() {
-    }
+	public UserDTO() {
+	}
 
+
+	@Column(name = "idUser")
 	public String getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	@Column(name="")
+	@Column(name = "keyBank")
 	public String getSecurityKey() {
 		return securityKey;
 	}
@@ -91,12 +88,12 @@ public class User implements Serializable {
 		this.surname = surname;
 	}
 
-	public List<Account> getAccounts() {
+	public List<AccountDTO> getAccounts() {
 		return this.accounts;
 	}
 
-	public void setAccounts(List<Account> accounts) {
+	public void setAccounts(List<AccountDTO> accounts) {
 		this.accounts = accounts;
 	}
-	
+
 }

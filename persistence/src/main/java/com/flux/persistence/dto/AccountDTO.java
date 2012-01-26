@@ -1,13 +1,13 @@
-package com.flux.entity;
+package com.flux.persistence.dto;
 
 
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.flux.entity.AccountPK;
-import com.flux.entity.Currency;
-import com.flux.entity.Transaction;
-import com.flux.entity.User;
+import com.flux.persistence.dto.AccountPKDTO;
+import com.flux.persistence.dto.CurrencyDTO;
+import com.flux.persistence.dto.TransactionDTO;
+import com.flux.persistence.dto.UserDTO;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -19,36 +19,36 @@ import java.util.List;
  */
 @Entity
 @Table(name="account")
-public class Account implements Serializable {
+public class AccountDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private AccountPK id;
+	private AccountPKDTO id;
 
 	private BigInteger idBank;
 
 	//bi-directional many-to-one association to Currency
     @ManyToOne
 	@JoinColumn(name="idCurrency", insertable=false, updatable=false)
-	private Currency currency;
+	private CurrencyDTO currency;
 
 	//bi-directional many-to-one association to User
     @ManyToOne
 	@JoinColumn(name="idUser")
-	private User user;
+	private UserDTO user;
 
 	//bi-directional many-to-one association to Transaction
 	@OneToMany(mappedBy="account")
-	private List<Transaction> transactions;
+	private List<TransactionDTO> transactions;
 
-    public Account() {
+    public AccountDTO() {
     }
 
-	public AccountPK getId() {
+	public AccountPKDTO getId() {
 		return this.id;
 	}
 
-	public void setId(AccountPK id) {
+	public void setId(AccountPKDTO id) {
 		this.id = id;
 	}
 	
@@ -60,27 +60,27 @@ public class Account implements Serializable {
 		this.idBank = idBank;
 	}
 
-	public Currency getCurrency() {
+	public CurrencyDTO getCurrency() {
 		return this.currency;
 	}
 
-	public void setCurrency(Currency currency) {
+	public void setCurrency(CurrencyDTO currency) {
 		this.currency = currency;
 	}
 	
-	public User getUser() {
+	public UserDTO getUser() {
 		return this.user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserDTO user) {
 		this.user = user;
 	}
 	
-	public List<Transaction> getTransactions() {
+	public List<TransactionDTO> getTransactions() {
 		return this.transactions;
 	}
 
-	public void setTransactions(List<Transaction> transactions) {
+	public void setTransactions(List<TransactionDTO> transactions) {
 		this.transactions = transactions;
 	}
 	

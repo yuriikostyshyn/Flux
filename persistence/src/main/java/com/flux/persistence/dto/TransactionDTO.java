@@ -1,10 +1,10 @@
-package com.flux.entity;
+package com.flux.persistence.dto;
 
 
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.flux.entity.Account;
+import com.flux.persistence.dto.AccountDTO;
 
 
 import java.math.BigInteger;
@@ -17,7 +17,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="transaction")
-public class Transaction implements Serializable {
+public class TransactionDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -41,14 +41,14 @@ public class Transaction implements Serializable {
 		@JoinColumn(name="idAccount", referencedColumnName="idAccount"),
 		@JoinColumn(name="idCurrency", referencedColumnName="idCurrency")
 		})
-	private Account account;
+	private AccountDTO account;
 
 	//bi-directional many-to-one association to Status
     @ManyToOne
 	@JoinColumn(name="Status_idStatus")
-	private Status status;
+	private StatusDTO status;
 
-    public Transaction() {
+    public TransactionDTO() {
     }
 
 	public String getIdTransaction() {
@@ -99,19 +99,19 @@ public class Transaction implements Serializable {
 		this.idStatus = idStatus;
 	}
 
-	public Account getAccount() {
+	public AccountDTO getAccount() {
 		return this.account;
 	}
 
-	public void setAccount(Account account) {
+	public void setAccount(AccountDTO account) {
 		this.account = account;
 	}
 	
-	public Status getStatus() {
+	public StatusDTO getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(StatusDTO status) {
 		this.status = status;
 	}
 	

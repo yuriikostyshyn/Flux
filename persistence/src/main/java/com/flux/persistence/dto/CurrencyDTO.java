@@ -1,9 +1,9 @@
-package com.flux.entity;
+package com.flux.persistence.dto;
 
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.flux.entity.Account;
+import com.flux.persistence.dto.AccountDTO;
 
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="currency")
-public class Currency implements Serializable {
+public class CurrencyDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,9 +27,9 @@ public class Currency implements Serializable {
 
 	//bi-directional many-to-one association to Account
 	@OneToMany(mappedBy="currency")
-	private List<Account> accounts;
+	private List<AccountDTO> accounts;
 
-    public Currency() {
+    public CurrencyDTO() {
     }
 
 	public int getIdCurrency() {
@@ -56,11 +56,11 @@ public class Currency implements Serializable {
 		this.name = name;
 	}
 
-	public List<Account> getAccounts() {
+	public List<AccountDTO> getAccounts() {
 		return this.accounts;
 	}
 
-	public void setAccounts(List<Account> accounts) {
+	public void setAccounts(List<AccountDTO> accounts) {
 		this.accounts = accounts;
 	}
 	
