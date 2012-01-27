@@ -10,26 +10,27 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.flux.dbs.dao.UserDao;
-import com.flux.entity.User;
+import com.flux.dbs.dao.UserDAO;
+import com.flux.domain.User;
+import com.flux.persistence.dto.UserDTO;
 
 @Component
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-public class UserDaoImpl extends UserDao {
+public class UserDAOImpl extends UserDAO {
 
 	private Mapper mapper;
 
 	@Override
-	public com.flux.domain.User getUserByLoginAndPassword(String login,
+	public User getUserByLoginAndPassword(String login,
 			String password) {
-		com.flux.domain.User resultUser = null;
+		User resultUser = null;
 		Query getUserQuery = entityManager.createNamedQuery("userByLoginPass");
 		getUserQuery.setParameter(1, login);
 		getUserQuery.setParameter(2, password);
-		List<User> queryResultList = getUserQuery.getResultList();
+		List<UserDTO> queryResultList = getUserQuery.getResultList();
 		if (!queryResultList.isEmpty()) {
-			com.flux.entity.User resultUserDTO = queryResultList.get(0);
-			resultUser = mapper.map(resultUserDTO, com.flux.domain.User.class);
+			UserDTO resultUserDTO = queryResultList.get(0);
+			resultUser = mapper.map(resultUserDTO, User.class);
 		}
 		return resultUser;
 	}
