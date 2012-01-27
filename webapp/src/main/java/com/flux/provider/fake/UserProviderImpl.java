@@ -10,7 +10,6 @@ import com.flux.provider.UserProvider;
 @Component
 public class UserProviderImpl implements UserProvider {
 
-	@Override
 	public User getUserByLoginAndPassword(String login, String password) {
 		User userToReturn = null;
 		final List<User> users = FakeDB.getUsers();
