@@ -6,12 +6,11 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>jboss/datasources/MySqlDS</jta-data-source>
-		<class>com.flux.persistence.dto.UserDTO</class>
-		<class>com.flux.persistence.dto.AccountDTO</class>
-		<class>com.flux.persistence.dto.AccountPKDTO</class>
-		<class>com.flux.persistence.dto.CurrencyDTO</class>
-		<class>com.flux.persistence.dto.StatusDTO</class>
-		<class>com.flux.persistence.dto.TransactionDTO</class>
+		<class>com.flux.persistence.entities.UserEntity</class>
+		<class>com.flux.persistence.entities.AccountEntity</class>
+		<class>com.flux.persistence.entities.CurrencyEntity</class>
+		<class>com.flux.persistence.entities.StatusEntity</class>
+		<class>com.flux.persistence.entities.TransactionEntity</class>
 
 		<exclude-unlisted-classes />
 		<properties>
