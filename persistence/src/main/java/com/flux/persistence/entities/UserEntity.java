@@ -1,9 +1,11 @@
-package com.flux.persistence.dto;
+package com.flux.persistence.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+
 import javax.persistence.*;
 
-import com.flux.persistence.dto.AccountDTO;
+import com.flux.persistence.entities.AccountEntity;
 
 import java.util.List;
 
@@ -12,13 +14,12 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQueries({ @NamedQuery(name = "userByLoginPass", query = "FROM UserDTO u WHERE u.login=? AND u.password=?") })
+@NamedQueries({ @NamedQuery(name = "userByLoginPass", query = "FROM UserEntity u WHERE u.login=? AND u.password=?") })
 @Table(name = "user")
-public class UserDTO implements Serializable {
+public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	private String id;
+	private BigInteger id;
 
 	private String securityKey;
 
@@ -31,23 +32,22 @@ public class UserDTO implements Serializable {
 	private String surname;
 
 	// bi-directional many-to-one association to Account
-	@OneToMany(mappedBy = "user")
-	private List<AccountDTO> accounts;
+	private List<AccountEntity> accounts;
 
-	public UserDTO() {
+	public UserEntity() {
 	}
 
-
-	@Column(name = "idUser")
-	public String getId() {
+	@Id
+	@Column(name = "user_id")
+	public BigInteger getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(BigInteger id) {
 		this.id = id;
 	}
 
-	@Column(name = "keyBank")
+	@Column(name = "security_key")
 	public String getSecurityKey() {
 		return securityKey;
 	}
@@ -88,11 +88,12 @@ public class UserDTO implements Serializable {
 		this.surname = surname;
 	}
 
-	public List<AccountDTO> getAccounts() {
+	@OneToMany(mappedBy = "user")
+	public List<AccountEntity> getAccounts() {
 		return this.accounts;
 	}
 
-	public void setAccounts(List<AccountDTO> accounts) {
+	public void setAccounts(List<AccountEntity> accounts) {
 		this.accounts = accounts;
 	}
 
