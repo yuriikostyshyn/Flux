@@ -3,6 +3,7 @@ require 'dependencies_versions'
 AOPALLIANCE = "aopalliance:aopalliance:jar:#{AOPALLIANCE_VERSION}"
 APACHE_ASM = "org.apache.servicemix.bundles:org.apache.servicemix.bundles.asm:jar:#{APACHE_ASM_VERSION}"
 CGLIB = "cglib:cglib:jar:#{CGLIB_VERSION}"
+COMMONS_BEANUTILS = "commons-beanutils:commons-beanutils:jar:#{COMMONS_BEANUTILS_VERSION}"
 COMMONS_LANG = "commons-lang:commons-lang:jar:#{COMMONS_LANG_VERSION}"
 COMMONS_LOGGING = "commons-logging:commons-logging:jar:#{COMMONS_LOGGING_VERSION}"
 DOZER = "net.sf.dozer:dozer:jar:#{DOZER_VERSION}"

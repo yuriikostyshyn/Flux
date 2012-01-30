@@ -35,7 +35,7 @@ end
 define 'webapp' do
 	project.version = FLUX_VERSION
 	project.group = 'com.flux'
-	compile.with AOPALLIANCE, APACHE_ASM, CGLIB, COMMONS_LANG, COMMONS_LOGGING, DOZER, LOG4J, SERVLET_API, SLF4J, SPRING,  projects('dbs'),  projects('domain'), projects('persistence')
+	compile.with AOPALLIANCE, APACHE_ASM, CGLIB, COMMONS_BEANUTILS, COMMONS_LANG, COMMONS_LOGGING, DOZER, LOG4J, SERVLET_API, SLF4J, SPRING,  projects('dbs'),  projects('domain'), projects('persistence')
 	test.with MOCKITO
 	package :war
 	task :deploy => :compile do
