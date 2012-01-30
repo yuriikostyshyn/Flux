@@ -12,13 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.flux.dbs.dao.UserDAO;
 import com.flux.domain.User;
-import com.flux.persistence.dto.UserDTO;
+import com.flux.persistence.entities.UserEntity;
 
 @Component
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 public class UserDAOImpl extends UserDAO {
-
-	private Mapper mapper;
 
 	@Override
 	public User getUserByLoginAndPassword(String login,
@@ -27,17 +25,13 @@ public class UserDAOImpl extends UserDAO {
 		Query getUserQuery = entityManager.createNamedQuery("userByLoginPass");
 		getUserQuery.setParameter(1, login);
 		getUserQuery.setParameter(2, password);
-		List<UserDTO> queryResultList = getUserQuery.getResultList();
+		List<UserEntity> queryResultList = getUserQuery.getResultList();
 		if (!queryResultList.isEmpty()) {
-			UserDTO resultUserDTO = queryResultList.get(0);
+			UserEntity resultUserDTO = queryResultList.get(0);
 			resultUser = mapper.map(resultUserDTO, User.class);
 		}
 		return resultUser;
 	}
 
-	@Autowired
-	public void setMapper(Mapper mapper) {
-		this.mapper = mapper;
-	}
-
+	
 }
