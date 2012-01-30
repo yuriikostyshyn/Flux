@@ -1,16 +1,16 @@
 package com.flux.domain;
 
 public class Currency {
-	private int id;
+	private int currencyId;
 	private String name;
 	private String longName;
 
-	public int getId() {
-		return id;
+	public int getCurrencyId() {
+		return currencyId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setCurrencyId(int currencyId) {
+		this.currencyId = currencyId;
 	}
 
 	public String getName() {
