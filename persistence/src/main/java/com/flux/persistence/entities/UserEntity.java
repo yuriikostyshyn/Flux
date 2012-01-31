@@ -19,7 +19,7 @@ import java.util.List;
 public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private BigInteger id;
+	private Integer userId;
 
 	private String securityKey;
 
@@ -36,15 +36,15 @@ public class UserEntity implements Serializable {
 
 	public UserEntity() {
 	}
-
+	
 	@Id
 	@Column(name = "user_id")
-	public BigInteger getId() {
-		return id;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setId(BigInteger id) {
-		this.id = id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	@Column(name = "security_key")

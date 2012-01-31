@@ -23,8 +23,7 @@ public class AccountDAOImpl	extends AccountDAO {
 		List<Account> result =null;
 		
 		Query getAccountsQuery = entityManager.createNamedQuery("getAccountsByUserId");
-		UserEntity givenUserEntity = mapper.map(givenUser, UserEntity.class);
-		getAccountsQuery.setParameter(1, givenUserEntity);
+		getAccountsQuery.setParameter(1, givenUser.getUserId());
 		List<AccountEntity> resultList = getAccountsQuery.getResultList();
 		
 		if(!resultList.isEmpty()){

@@ -13,7 +13,7 @@ import java.math.BigInteger;
  * 
  */
 @Entity
-@NamedQueries({@NamedQuery(name="getAccountsByUserId", query="FROM AccountEntity accountEntity WHERE accountEntity.user = ?")})
+@NamedQueries({@NamedQuery(name="getAccountsByUserId", query="FROM AccountEntity accountEntity WHERE accountEntity.user.id = ?")})
 @Table(name = "account")
 public class AccountEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
