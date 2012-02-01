@@ -4,5 +4,7 @@ import com.flux.domain.TransactionStatus;
 
 
 public abstract class TransactionStatusDAO extends AbstractDAO{
+	
 	public abstract TransactionStatus getStatusById(int statusId);
+	
 }

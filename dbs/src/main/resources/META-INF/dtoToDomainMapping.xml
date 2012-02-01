@@ -14,4 +14,8 @@
 		<class-a>com.flux.persistence.entities.AccountEntity</class-a>
 		<class-b>com.flux.domain.Account</class-b>
 	</mapping>
+	<mapping>
+		<class-a>com.flux.persistence.entities.TransactionStatusEntity</class-a>
+		<class-b>com.flux.domain.TransactionStatus</class-b>
+	</mapping>
 </mappings>

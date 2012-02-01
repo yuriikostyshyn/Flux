@@ -9,7 +9,7 @@
 		<class>com.flux.persistence.entities.UserEntity</class>
 		<class>com.flux.persistence.entities.AccountEntity</class>
 		<class>com.flux.persistence.entities.CurrencyEntity</class>
-		<class>com.flux.persistence.entities.StatusEntity</class>
+		<class>com.flux.persistence.entities.TransactionStatusEntity</class>
 		<class>com.flux.persistence.entities.TransactionEntity</class>
 
 		<exclude-unlisted-classes />

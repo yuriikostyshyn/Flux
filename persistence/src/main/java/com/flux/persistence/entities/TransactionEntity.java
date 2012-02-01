@@ -13,6 +13,7 @@ import java.util.Date;
  * 
  */
 @Entity
+@NamedQueries({@NamedQuery(name="getTransactionsByAccountToId", query="FROM TransactionEntity transaction WHERE transaction.accountTo.accountId = ?")})
 @Table(name = "transaction")
 public class TransactionEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -31,7 +32,7 @@ public class TransactionEntity implements Serializable {
 	
 	private Double amount;
 
-	private StatusEntity status;
+	private TransactionStatusEntity status;
 	
 	private CurrencyEntity currency;
 
@@ -48,6 +49,7 @@ public class TransactionEntity implements Serializable {
 		this.transactionId = transactionId;
 	}
 
+	@ManyToOne
 	@JoinColumn(name = "account_id_from", insertable = false, updatable = false)
 	public AccountEntity getAccountFrom() {
 		return accountFrom;
@@ -57,6 +59,7 @@ public class TransactionEntity implements Serializable {
 		this.accountFrom = accountFrom;
 	}
 
+	@ManyToOne
 	@JoinColumn(name = "account_id_to", insertable = false, updatable = false)
 	public AccountEntity getAccountTo() {
 		return accountTo;
@@ -94,11 +97,11 @@ public class TransactionEntity implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "status_id", insertable = false, updatable = false)
-	public StatusEntity getStatus() {
+	public TransactionStatusEntity getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(StatusEntity status) {
+	public void setStatus(TransactionStatusEntity status) {
 		this.status = status;
 	}
 	
