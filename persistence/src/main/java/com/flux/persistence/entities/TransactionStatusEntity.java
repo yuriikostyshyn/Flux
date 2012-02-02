@@ -15,7 +15,7 @@ import java.util.List;
 public class TransactionStatusEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private int statusId;
+	private Integer statusId;
 
 	private String statusMessage;
 
@@ -24,11 +24,11 @@ public class TransactionStatusEntity implements Serializable {
 
 	@Id
 	@Column(name = "status_id")
-	public int getStatusId() {
+	public Integer getStatusId() {
 		return statusId;
 	}
 
-	public void setStatusId(int statusId) {
+	public void setStatusId(Integer statusId) {
 		this.statusId = statusId;
 	}
 

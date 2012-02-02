@@ -17,7 +17,7 @@ import com.flux.persistence.entities.TransactionStatusEntity;
 public class TransactionStatusDAOImpl extends TransactionStatusDAO{
 
 	@Override
-	public TransactionStatus getStatusById(int statusId) {
+	public TransactionStatus getStatusById(Integer statusId) {
 		TransactionStatus result = null;
 		Query getStatusQuery = entityManager.createNamedQuery("getStatusById");
 		getStatusQuery.setParameter(1, statusId);

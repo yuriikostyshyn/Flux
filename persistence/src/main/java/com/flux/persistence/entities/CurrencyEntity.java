@@ -20,7 +20,7 @@ public class CurrencyEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	
-	private int currencyId;
+	private Integer currencyId;
 
 	private String longName;
 
@@ -31,12 +31,12 @@ public class CurrencyEntity implements Serializable {
 
 	@Id
 	@Column(name = "currency_id")
-    public int getCurrencyId() {
+    public Integer getCurrencyId() {
 		return currencyId;
 	}
 
 
-	public void setCurrencyId(int currencyId) {
+	public void setCurrencyId(Integer currencyId) {
 		this.currencyId = currencyId;
 	}
 

@@ -4,6 +4,6 @@ import com.flux.domain.Currency;
 
 public abstract class CurrencyDAO extends AbstractDAO{
 	
-	public abstract Currency getCurrencyById(int currencyId);
+	public abstract Currency getCurrencyById(Integer currencyId);
 	
 }

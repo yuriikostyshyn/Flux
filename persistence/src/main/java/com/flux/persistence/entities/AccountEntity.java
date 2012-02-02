@@ -18,9 +18,9 @@ import java.math.BigInteger;
 public class AccountEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private BigInteger accountId;
+	private Long accountId;
 
-	private BigInteger bankId;
+	private Long bankId;
 
 	// bi-directional many-to-one association to Currency
 	private CurrencyEntity currency;
@@ -37,20 +37,20 @@ public class AccountEntity implements Serializable {
 
 	@Id
 	@Column(name = "account_id")
-	public BigInteger getAccountId() {
+	public Long getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(BigInteger accountid) {
+	public void setAccountId(Long accountid) {
 		this.accountId = accountid;
 	}
 
 	@Column(name = "bank_id")
-	public BigInteger getBankId() {
+	public Long getBankId() {
 		return bankId;
 	}
 
-	public void setBankId(BigInteger bankId) {
+	public void setBankId(Long bankId) {
 		this.bankId = bankId;
 	}
 

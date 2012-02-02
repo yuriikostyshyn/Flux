@@ -18,7 +18,7 @@ import java.util.Date;
 public class TransactionEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private BigInteger transactionId;
+	private Long transactionId;
 
 	private AccountEntity accountFrom;
 
@@ -41,11 +41,11 @@ public class TransactionEntity implements Serializable {
 
 	@Id
 	@Column(name = "transaction_id")
-	public BigInteger getTransactionId() {
+	public Long getTransactionId() {
 		return transactionId;
 	}
 
-	public void setTransactionId(BigInteger transactionId) {
+	public void setTransactionId(Long transactionId) {
 		this.transactionId = transactionId;
 	}
 

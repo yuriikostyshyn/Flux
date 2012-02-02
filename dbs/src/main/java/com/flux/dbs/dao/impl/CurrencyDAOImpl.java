@@ -17,7 +17,7 @@ import com.flux.persistence.entities.CurrencyEntity;
 public class CurrencyDAOImpl extends CurrencyDAO {
 
 	@Override
-	public Currency getCurrencyById(int currencyId) {
+	public Currency getCurrencyById(Integer currencyId) {
 		Currency result = null;
 
 		Query getCurrencyQuery = entityManager
