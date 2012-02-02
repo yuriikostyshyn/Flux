@@ -1,5 +1,6 @@
 package com.flux.dbs.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -16,21 +17,23 @@ import com.flux.persistence.entities.UserEntity;
 
 @Component
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-public class AccountDAOImpl	extends AccountDAO {
+public class AccountDAOImpl extends AccountDAO {
 
 	@Override
 	public List<Account> getAllAccountForGivenUser(User givenUser) {
-		List<Account> result =null;
-		
+		List<Account> resultAccounts = new ArrayList<Account>();
+
 		Query getAccountsQuery = entityManager.createNamedQuery("getAccountsByUserId");
 		getAccountsQuery.setParameter(1, givenUser.getUserId());
-		List<AccountEntity> resultList = getAccountsQuery.getResultList();
-		
-		if(!resultList.isEmpty()){
-			result = mapper.map(resultList, List.class);
-		}
-		
-		return result;
-	}
+		List<AccountEntity> resultAccountEntities = getAccountsQuery.getResultList();
 
+		if (!resultAccountEntities.isEmpty()) {
+			for (AccountEntity accountEntityItem : resultAccountEntities) {
+				Account resultAccountItem = mapper.map(accountEntityItem, Account.class);
+				resultAccounts.add(resultAccountItem);
+			}
+		}
+		return resultAccounts;
+
+	}
 }
