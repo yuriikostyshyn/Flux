@@ -16,6 +16,7 @@ define 'dbs' do
 	project.version = '1.0.0'
 	project.group = 'com.flux'
 	compile.with  DOZER, PERSISTENCE_API, SPRING,  projects('domain'), projects('persistence')
+	test.with MOCKITO
 	package :jar
 end
 
