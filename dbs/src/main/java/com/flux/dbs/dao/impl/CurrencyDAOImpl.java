@@ -18,17 +18,18 @@ public class CurrencyDAOImpl extends CurrencyDAO {
 
 	@Override
 	public Currency getCurrencyById(Integer currencyId) {
-		Currency result = null;
+		Currency resultCurrency = null;
 
-		Query getCurrencyQuery = entityManager
-				.createNamedQuery("getCurrencyById");
+		Query getCurrencyQuery = entityManager.createNamedQuery("getCurrencyById");
 		getCurrencyQuery.setParameter(1, currencyId);
-		List<CurrencyEntity> resultList = getCurrencyQuery.getResultList();
-		if (!resultList.isEmpty()) {
-			CurrencyEntity resultEntity = resultList.get(0);
-			result = mapper.map(resultEntity, Currency.class);
+		
+		List<CurrencyEntity> resultCurrencyEntities = getCurrencyQuery.getResultList();
+		
+		if (!resultCurrencyEntities.isEmpty()) {			
+			CurrencyEntity resultCurrencyEntity = resultCurrencyEntities.get(0);
+			resultCurrency = mapper.map(resultCurrencyEntity, Currency.class);			
 		}
-		return result;
+		return resultCurrency;
 	}
 
 }

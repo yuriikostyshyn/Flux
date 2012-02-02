@@ -25,6 +25,7 @@ public class AccountDAOImpl extends AccountDAO {
 
 		Query getAccountsQuery = entityManager.createNamedQuery("getAccountsByUserId");
 		getAccountsQuery.setParameter(1, givenUser.getUserId());
+		
 		List<AccountEntity> resultAccountEntities = getAccountsQuery.getResultList();
 
 		if (!resultAccountEntities.isEmpty()) {

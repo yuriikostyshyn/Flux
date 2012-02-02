@@ -47,7 +47,7 @@ public class UserProviderJPAImpl implements UserProvider {
 		LOGGER.info("Transaction status instance we got:");
 		LOGGER.info("Id:" + status.getStatusId());
 		LOGGER.info("Message:" + status.getStatusMessage());
-		List<Transaction> transactions = transactionDAO.getTranactionsByAccountToId(new BigInteger("1"));
+		List<Transaction> transactions = transactionDAO.getTranactionsByAccountToId(1L);
 		return result;
 	}
 

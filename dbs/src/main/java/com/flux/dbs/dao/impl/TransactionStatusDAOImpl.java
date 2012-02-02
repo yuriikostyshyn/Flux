@@ -18,15 +18,18 @@ public class TransactionStatusDAOImpl extends TransactionStatusDAO{
 
 	@Override
 	public TransactionStatus getStatusById(Integer statusId) {
-		TransactionStatus result = null;
+		TransactionStatus resultTransactionStatus = null;
+		
 		Query getStatusQuery = entityManager.createNamedQuery("getStatusById");
 		getStatusQuery.setParameter(1, statusId);
-		List<TransactionStatusEntity> queryResultList = getStatusQuery.getResultList();
-		if(!queryResultList.isEmpty()){
-			TransactionStatusEntity resultEntity = queryResultList.get(0);
-			result = mapper.map(resultEntity, TransactionStatus.class);
+		
+		List<TransactionStatusEntity> resultTransactionStatusEntities = getStatusQuery.getResultList();
+		
+		if(!resultTransactionStatusEntities.isEmpty()){			
+			TransactionStatusEntity resultTransactionStatusEntity = resultTransactionStatusEntities.get(0);
+			resultTransactionStatus = mapper.map(resultTransactionStatusEntity, TransactionStatus.class);
 		}
-		return result;
+		return resultTransactionStatus;
 	}
 
 }

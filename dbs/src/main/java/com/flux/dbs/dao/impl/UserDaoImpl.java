@@ -19,19 +19,19 @@ import com.flux.persistence.entities.UserEntity;
 public class UserDAOImpl extends UserDAO {
 
 	@Override
-	public User getUserByLoginAndPassword(String login,
-			String password) {
+	public User getUserByLoginAndPassword(String login, String password) {
 		User resultUser = null;
+		
 		Query getUserQuery = entityManager.createNamedQuery("userByLoginPass");
 		getUserQuery.setParameter(1, login);
 		getUserQuery.setParameter(2, password);
-		List<UserEntity> queryResultList = getUserQuery.getResultList();
-		if (!queryResultList.isEmpty()) {
-			UserEntity resultUserDTO = queryResultList.get(0);
-			resultUser = mapper.map(resultUserDTO, User.class);
+		
+		List<UserEntity> resultUserEntities = getUserQuery.getResultList();
+		
+		if (!resultUserEntities.isEmpty()) {
+			UserEntity resultUserEntity = resultUserEntities.get(0);
+			resultUser = mapper.map(resultUserEntity, User.class);
 		}
 		return resultUser;
 	}
-
-	
 }
