@@ -11,11 +11,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.dozer.Mapper;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.flux.domain.Account;
 import com.flux.domain.Currency;
 import com.flux.persistence.entities.CurrencyEntity;
 
@@ -44,14 +46,23 @@ public class CurrencyDAOImplTest {
 		MockitoAnnotations.initMocks(this);
 		underTest.setEntityManager(entityManagerMock);
 		underTest.setMapper(mapperMock);
+
+		when(entityManagerMock.createNamedQuery(CurrencyDAOImpl.GET_CURRENCY_BY_ID_QUERY_NAME)).thenReturn(
+				getCurrencyQueryMock);
+		when(getCurrencyQueryMock.getResultList()).thenReturn(resultCurrencyEntities);
 	}
 
 	@Test
 	public void shouldCallMapperForCurrency() {
-		when(entityManagerMock.createNamedQuery(CurrencyDAOImpl.GET_CURRENCY_BY_ID_QUERY_NAME)).thenReturn(
-				getCurrencyQueryMock);
-		when(getCurrencyQueryMock.getResultList()).thenReturn(resultCurrencyEntities);
 		underTest.getCurrencyById(CURRENCY_ID);
 		verify(mapperMock, times(1)).map(resultCurrencyEntity, Currency.class);
+	}
+
+	@Test
+	public void shouldReturnCurrencyInstance() {
+		when(mapperMock.map(resultCurrencyEntity, Currency.class)).thenReturn(new Currency());
+		Object resultCurrencyInstance = underTest.getCurrencyById(CURRENCY_ID);
+		Assert.assertEquals(Currency.class, resultCurrencyInstance.getClass());
+
 	}
 }

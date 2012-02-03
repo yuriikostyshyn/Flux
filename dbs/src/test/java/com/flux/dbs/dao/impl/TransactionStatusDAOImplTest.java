@@ -11,11 +11,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.dozer.Mapper;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.flux.domain.Transaction;
 import com.flux.domain.TransactionStatus;
 import com.flux.persistence.entities.TransactionStatusEntity;
 
@@ -43,14 +45,23 @@ public class TransactionStatusDAOImplTest {
 		MockitoAnnotations.initMocks(this);
 		underTest.setEntityManager(entityManagerMock);
 		underTest.setMapper(mapperMock);
+
+		when(entityManagerMock.createNamedQuery(TransactionStatusDAOImpl.GET_STATUS_BY_ID_QUERY_NAME)).thenReturn(
+				getTransactionStatusQueryMock);
+		when(getTransactionStatusQueryMock.getResultList()).thenReturn(resultTransactionStatusEntities);
 	}
 
 	@Test
 	public void shouldCallMapperForTransaction() {
-		when(entityManagerMock.createNamedQuery(TransactionStatusDAOImpl.GET_STATUS_BY_ID_QUERY_NAME)).thenReturn(
-				getTransactionStatusQueryMock);
-		when(getTransactionStatusQueryMock.getResultList()).thenReturn(resultTransactionStatusEntities);
 		underTest.getStatusById(STATUS_ID);
 		verify(mapperMock, times(1)).map(resultTransactionStatusEntity, TransactionStatus.class);
+	}
+
+	@Test
+	public void shouldReturnTransactionStatusInstance() {
+		when(mapperMock.map(resultTransactionStatusEntity, TransactionStatus.class))
+				.thenReturn(new TransactionStatus());
+		Object resultTransactionStatusInstance = underTest.getStatusById(STATUS_ID);
+		Assert.assertEquals(TransactionStatus.class, resultTransactionStatusInstance.getClass());
 	}
 }
