@@ -7,6 +7,6 @@ import com.flux.domain.User;
 
 public abstract class AccountDAO extends AbstractDAO{
 	
-	public abstract List<Account> getAllAccountForGivenUser(User givenUser);
+	public abstract List<Account> getAccountsByUserId(int userId);
 	
 }

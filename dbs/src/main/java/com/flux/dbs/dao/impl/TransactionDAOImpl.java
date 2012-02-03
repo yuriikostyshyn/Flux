@@ -15,11 +15,13 @@ import com.flux.persistence.entities.TransactionEntity;
 @Component
 public class TransactionDAOImpl extends TransactionDAO {
 
+	public static final String GET_TRANSACTIONS_BY_ACCOUNT_TO_ID_QUERY_NAME = "getTransactionsByAccountToId";
+
 	@Override
-	public List<Transaction> getTranactionsByAccountToId(Long accountId) {
+	public List<Transaction> getTransactionsByAccountToId(Long accountId) {
 		List<Transaction> resultTransactions = new ArrayList<Transaction>();
 
-		Query getTransactionsQuery = entityManager.createNamedQuery("getTransactionsByAccountToId");
+		Query getTransactionsQuery = entityManager.createNamedQuery(GET_TRANSACTIONS_BY_ACCOUNT_TO_ID_QUERY_NAME);
 		getTransactionsQuery.setParameter(1, accountId);
 
 		List<TransactionEntity> resultTransactionEntities = getTransactionsQuery.getResultList();

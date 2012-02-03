@@ -16,11 +16,13 @@ import com.flux.persistence.entities.TransactionStatusEntity;
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 public class TransactionStatusDAOImpl extends TransactionStatusDAO{
 
+	public static final String GET_STATUS_BY_ID_QUERY_NAME = "getStatusById";
+
 	@Override
 	public TransactionStatus getStatusById(Integer statusId) {
 		TransactionStatus resultTransactionStatus = null;
 		
-		Query getStatusQuery = entityManager.createNamedQuery("getStatusById");
+		Query getStatusQuery = entityManager.createNamedQuery(GET_STATUS_BY_ID_QUERY_NAME);
 		getStatusQuery.setParameter(1, statusId);
 		
 		List<TransactionStatusEntity> resultTransactionStatusEntities = getStatusQuery.getResultList();

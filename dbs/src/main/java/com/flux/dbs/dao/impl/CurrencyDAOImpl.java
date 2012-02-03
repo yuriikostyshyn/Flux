@@ -16,11 +16,13 @@ import com.flux.persistence.entities.CurrencyEntity;
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 public class CurrencyDAOImpl extends CurrencyDAO {
 
+	public static final String GET_CURRENCY_BY_ID_QUERY_NAME = "getCurrencyById";
+
 	@Override
 	public Currency getCurrencyById(Integer currencyId) {
 		Currency resultCurrency = null;
 
-		Query getCurrencyQuery = entityManager.createNamedQuery("getCurrencyById");
+		Query getCurrencyQuery = entityManager.createNamedQuery(GET_CURRENCY_BY_ID_QUERY_NAME);
 		getCurrencyQuery.setParameter(1, currencyId);
 		
 		List<CurrencyEntity> resultCurrencyEntities = getCurrencyQuery.getResultList();

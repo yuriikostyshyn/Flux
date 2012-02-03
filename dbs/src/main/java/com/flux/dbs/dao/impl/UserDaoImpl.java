@@ -18,11 +18,13 @@ import com.flux.persistence.entities.UserEntity;
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 public class UserDAOImpl extends UserDAO {
 
+	public static final String GET_USER_BY_LOGIN_PASSWORD_QUERY_NAME = "userByLoginPass";
+
 	@Override
 	public User getUserByLoginAndPassword(String login, String password) {
 		User resultUser = null;
 		
-		Query getUserQuery = entityManager.createNamedQuery("userByLoginPass");
+		Query getUserQuery = entityManager.createNamedQuery(GET_USER_BY_LOGIN_PASSWORD_QUERY_NAME);
 		getUserQuery.setParameter(1, login);
 		getUserQuery.setParameter(2, password);
 		

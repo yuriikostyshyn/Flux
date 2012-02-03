@@ -19,12 +19,14 @@ import com.flux.persistence.entities.UserEntity;
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
 public class AccountDAOImpl extends AccountDAO {
 
+	public static final String GET_ACCOUNTS_BY_USER_ID_QUERY_NAME = "getAccountsByUserId";
+
 	@Override
-	public List<Account> getAllAccountForGivenUser(User givenUser) {
+	public List<Account> getAccountsByUserId(int userId) {
 		List<Account> resultAccounts = new ArrayList<Account>();
 
-		Query getAccountsQuery = entityManager.createNamedQuery("getAccountsByUserId");
-		getAccountsQuery.setParameter(1, givenUser.getUserId());
+		Query getAccountsQuery = entityManager.createNamedQuery(GET_ACCOUNTS_BY_USER_ID_QUERY_NAME);
+		getAccountsQuery.setParameter(1, userId);
 		
 		List<AccountEntity> resultAccountEntities = getAccountsQuery.getResultList();
 

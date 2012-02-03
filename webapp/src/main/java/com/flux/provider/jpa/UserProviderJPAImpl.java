@@ -25,29 +25,9 @@ public class UserProviderJPAImpl implements UserProvider {
 
 	private UserDAO userDAO;
 
-	private CurrencyDAO currencyDAO;
-
-	private AccountDAO accountDAO;
-
-	private TransactionStatusDAO transactionStatusDAO;
-	
-	private TransactionDAO transactionDAO;
-
 	public User getUserByLoginAndPassword(String login, String password) {
 
 		User result = userDAO.getUserByLoginAndPassword(login, password);
-		Currency currency = currencyDAO.getCurrencyById(1);
-
-		LOGGER.info("Currency instance we got:");
-		LOGGER.info("Id:" + currency.getCurrencyId());
-		LOGGER.info("Name:" + currency.getName());
-		LOGGER.info("Long name:" + currency.getLongName());
-		List<Account> accounts = accountDAO.getAllAccountForGivenUser(result);
-		TransactionStatus status = transactionStatusDAO.getStatusById(1);
-		LOGGER.info("Transaction status instance we got:");
-		LOGGER.info("Id:" + status.getStatusId());
-		LOGGER.info("Message:" + status.getStatusMessage());
-		List<Transaction> transactions = transactionDAO.getTranactionsByAccountToId(1L);
 		return result;
 	}
 
@@ -55,25 +35,4 @@ public class UserProviderJPAImpl implements UserProvider {
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
-
-	@Autowired
-	public void setCurrencyDAO(CurrencyDAO currencyDAO) {
-		this.currencyDAO = currencyDAO;
-	}
-
-	@Autowired
-	public void setAccountDAO(AccountDAO accountDAO) {
-		this.accountDAO = accountDAO;
-	}
-
-	@Autowired
-	public void setTransactionStatusDAO(TransactionStatusDAO transactionStatusDAO) {
-		this.transactionStatusDAO = transactionStatusDAO;
-	}
-	
-	@Autowired
-	public void setTransactionDAO(TransactionDAO transactionDAO) {
-		this.transactionDAO = transactionDAO;
-	}
-
 }
