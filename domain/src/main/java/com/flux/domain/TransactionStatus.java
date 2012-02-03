@@ -1,15 +1,15 @@
 package com.flux.domain;
 
 public class TransactionStatus {
-	private int id;
+	private int statusId;
 	private String statusMessage;
 
-	public int getId() {
-		return id;
+	public int getStatusId() {
+		return statusId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
 	}
 
 	public String getStatusMessage() {

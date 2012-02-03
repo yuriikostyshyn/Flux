@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	<mapping>
+		<class-a>com.flux.persistence.entities.UserEntity</class-a>
+		<class-b>com.flux.domain.User</class-b>
+	</mapping>
+	<mapping>
+		<class-a>com.flux.persistence.entities.CurrencyEntity</class-a>
+		<class-b>com.flux.domain.Currency</class-b>
+	</mapping>
+	<mapping>
+		<class-a>com.flux.persistence.entities.AccountEntity</class-a>
+		<class-b>com.flux.domain.Account</class-b>
+	</mapping>
+	<mapping>
+		<class-a>com.flux.persistence.entities.TransactionStatusEntity</class-a>
+		<class-b>com.flux.domain.TransactionStatus</class-b>
+	</mapping>
+</mappings>

@@ -3,7 +3,7 @@ package com.flux.domain;
 import java.util.Date;
 
 public class Transaction {
-	private long id;
+	private long transctionId;
 	private Account accountFrom;
 	private Account accountTo;
 	private Date startDate;
@@ -11,12 +11,12 @@ public class Transaction {
 	private Double amount;
 	private TransactionStatus status;
 
-	public long getId() {
-		return id;
+	public long getTransctionId() {
+		return transctionId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setTransctionId(long transctionId) {
+		this.transctionId = transctionId;
 	}
 
 	public Account getAccountFrom() {

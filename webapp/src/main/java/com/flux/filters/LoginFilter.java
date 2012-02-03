@@ -22,12 +22,10 @@ public class LoginFilter implements Filter {
 	private static final String LOGIN_DO = "login.do";
 	private static final Logger LOGGER = Logger.getLogger(LoginFilter.class);
 
-	@Override
 	public void destroy() {
 
 	}
 
-	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
@@ -46,7 +44,6 @@ public class LoginFilter implements Filter {
 		}
 	}
 
-	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub
 

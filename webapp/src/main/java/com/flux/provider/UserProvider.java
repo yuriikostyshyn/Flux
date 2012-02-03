@@ -4,6 +4,6 @@ import com.flux.domain.User;
 
 public interface UserProvider {
 
-	User getUserByLoginAndPassword(String login, String password);
+	public User getUserByLoginAndPassword(String login, String password);
 
 }

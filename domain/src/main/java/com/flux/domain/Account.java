@@ -1,8 +1,10 @@
 package com.flux.domain;
 
+import java.math.BigInteger;
+
 public class Account {
 	private User user;
-	private long accountId;
+	private BigInteger accountId;
 	private int bankId;
 	private Currency currency;
 	private double amount;
@@ -16,11 +18,11 @@ public class Account {
 		this.user = user;
 	}
 
-	public long getAccountId() {
+	public BigInteger getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(long accountId) {
+	public void setAccountId(BigInteger accountId) {
 		this.accountId = accountId;
 	}
 

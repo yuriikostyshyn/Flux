@@ -15,6 +15,8 @@ end
 define 'dbs' do
 	project.version = '1.0.0'
 	project.group = 'com.flux'
+	compile.with  DOZER, PERSISTENCE_API, SPRING,  projects('domain'), projects('persistence')
+	test.with MOCKITO
 	package :jar
 end
 
@@ -34,7 +36,7 @@ end
 define 'webapp' do
 	project.version = FLUX_VERSION
 	project.group = 'com.flux'
-	compile.with COMMONS_LOGGING, SPRING, LOG4J, SERVLET_API, projects('domain'), projects('persistence')
+	compile.with AOPALLIANCE, APACHE_ASM, CGLIB, COMMONS_BEANUTILS, COMMONS_LANG, COMMONS_LOGGING, DOZER, LOG4J, SERVLET_API, SLF4J, SPRING,  projects('dbs'),  projects('domain'), projects('persistence')
 	test.with MOCKITO
 	package :war
 	task :deploy => :compile do

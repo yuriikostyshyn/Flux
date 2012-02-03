@@ -5,9 +5,13 @@
 	version="2.4">
 
 
-	<!-- <context-param> <param-name>contexConfigLocation</param-name> <param-value>/WEB-INF/spring/flux/applicationContext.xml</param-value> 
-		</context-param> -->
-
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/applicationContext.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	<filter>
 		<filter-name>loginFilter</filter-name>
 		<filter-class>com.flux.filters.LoginFilter</filter-class>
