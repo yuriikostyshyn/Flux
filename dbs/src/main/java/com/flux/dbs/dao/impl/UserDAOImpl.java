@@ -22,7 +22,7 @@ public class UserDAOImpl extends UserDAO {
 
 	@Override
 	public User getUserByLoginAndPassword(String login, String password) {
-		User resultUser = null;
+		User resultUser = new User();
 		
 		Query getUserQuery = entityManager.createNamedQuery(GET_USER_BY_LOGIN_PASSWORD_QUERY_NAME);
 		getUserQuery.setParameter(1, login);

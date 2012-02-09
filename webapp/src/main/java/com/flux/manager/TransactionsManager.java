@@ -12,6 +12,7 @@ import com.flux.provider.TransactionProvider;
 @Component
 public class TransactionsManager {
 
+	
 	private TransactionProvider transactionProvider;
 
 	@Autowired
@@ -19,7 +20,7 @@ public class TransactionsManager {
 		this.transactionProvider = transactionProvider;
 	}
 
-	public List<Transaction> getTransactions(Map accountId) {
+	public List<Transaction> getTransactions(Map model) {
 		// TODO Auto-generated method stub
 		return null;
 	}
