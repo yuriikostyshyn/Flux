@@ -28,10 +28,9 @@ public class TransactionListController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView showTransactionsForAccount(ModelAndView modelAndView){
 		ModelAndView resultModelAndView = modelAndView;
-		Map model = modelAndView.getModel();
+		Map<String,Object> model = modelAndView.getModel();
 		
-		List<Transaction> transactions = transactionsManager.getTransactions(model);
-		modelAndView.addObject(TRANSACTIONS_ATTRIBUTE_NAME, transactions);
+		transactionsManager.getTransactions(model);
 		
 		resultModelAndView.setViewName(HOMEPAGE_PATH);
 		return resultModelAndView;
