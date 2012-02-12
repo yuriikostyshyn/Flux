@@ -27,7 +27,7 @@ public class TransactionsManager {
 
 		long accountId = getAccountIdFromModel(model);		
 		if(accountId !=	0){
-		resultTransactions = transactionProvider.getTransactionByAccountToId(accountId);
+		resultTransactions = transactionProvider.getTransactionByAccountId(accountId);
 		}
 		
 		model.put(TRANSACTIONS_ATTRIBUTE_NAME, resultTransactions);
@@ -38,7 +38,7 @@ public class TransactionsManager {
 		try {
 			result = (Long) model.get(ACCOUNT_ID_ATTRIBUTE_NAME);
 			} catch (Exception ex) {
-			LOGGER.error("Account id is absent", ex);
+			LOGGER.error("Account id is absent or has incorrect format", ex);
 		}
 		return result;
 	}
