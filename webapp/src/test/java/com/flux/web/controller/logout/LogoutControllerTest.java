@@ -19,6 +19,7 @@ public class LogoutControllerTest {
 	private HttpServletResponse mockResponse;
 	@Mock
 	private HttpSession mockSession;
+
 	private LogoutController underTest;
 
 	@Before

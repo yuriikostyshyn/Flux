@@ -25,16 +25,17 @@ public class AccountDAOImplTest {
 
 	private static final int USER_ID = 1;
 
-	private AccountDAOImpl underTest;
-	private List<AccountEntity> resultAccountEntities;
-	private AccountEntity resultAccountEntity;
-
 	@Mock
 	private EntityManager entityManagerMock;
 	@Mock
 	private Mapper mapperMock;
 	@Mock
 	private Query getAccountsQueryMock;
+	
+	private AccountDAOImpl underTest;
+	private List<AccountEntity> resultAccountEntities;
+	private AccountEntity resultAccountEntity;
+
 
 	@Before
 	public void setUp() {

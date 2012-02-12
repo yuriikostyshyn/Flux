@@ -25,16 +25,16 @@ public class CurrencyDAOImplTest {
 
 	private static final int CURRENCY_ID = 1;
 
-	private CurrencyDAOImpl underTest;
-	private List<CurrencyEntity> resultCurrencyEntities;
-	private CurrencyEntity resultCurrencyEntity;
-
 	@Mock
 	private EntityManager entityManagerMock;
 	@Mock
 	private Query getCurrencyQueryMock;
 	@Mock
 	private Mapper mapperMock;
+
+	private CurrencyDAOImpl underTest;
+	private List<CurrencyEntity> resultCurrencyEntities;
+	private CurrencyEntity resultCurrencyEntity;
 
 	@Before
 	public void setUp() {

@@ -21,13 +21,16 @@ public class TransactionsManagerTest {
 	
 	private static final long ACCOUNT_ID = 1;
 
-	private TransactionsManager underTest;
-	
-	private Map model;
-	
+	private static final String INCORRECT_ACCOUNT_ID = "incorrect account id";
+
 	@Mock
 	private TransactionProvider mockTransactionProvider;
 	
+	private TransactionsManager underTest;
+	
+	private Map<String,Object> model;
+	
+
 	@Before
 	public void setUp(){
 		underTest = new TransactionsManager();
@@ -37,20 +40,30 @@ public class TransactionsManagerTest {
 		underTest.setTransactionProvider(mockTransactionProvider);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldAddTransactionsToModelIfAccountIdPresents(){
 		List<Transaction> transactions = new ArrayList<Transaction>();
 		model.put(TransactionsManager.ACCOUNT_ID_ATTRIBUTE_NAME, ACCOUNT_ID);
-		Mockito.when(mockTransactionProvider.getTransactionByAccountToId(ACCOUNT_ID)).thenReturn(transactions);
+		Mockito.when(mockTransactionProvider.getTransactionByAccountId(ACCOUNT_ID)).thenReturn(transactions);
 		underTest.getTransactions(model);
 		List<Transaction> resultTransactions = (List<Transaction>)model.get(TransactionsManager.TRANSACTIONS_ATTRIBUTE_NAME); 
 		Assert.assertEquals(transactions, resultTransactions);
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldAddEmptyListToModelIfAccountIdIsAbsent(){
 		underTest.getTransactions(model);
+		List<Transaction> resultTransactions = (List<Transaction>)model.get(TransactionsManager.TRANSACTIONS_ATTRIBUTE_NAME); 
+		Assert.assertEquals(Collections.EMPTY_LIST, resultTransactions);
+	}
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldAddEmptyListToModelIfAccountIdHasIncorrectFormat(){
+		underTest.getTransactions(model);
+		model.put(TransactionsManager.ACCOUNT_ID_ATTRIBUTE_NAME, INCORRECT_ACCOUNT_ID);
 		List<Transaction> resultTransactions = (List<Transaction>)model.get(TransactionsManager.TRANSACTIONS_ATTRIBUTE_NAME); 
 		Assert.assertEquals(Collections.EMPTY_LIST, resultTransactions);
 	}
