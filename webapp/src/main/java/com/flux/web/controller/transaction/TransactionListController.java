@@ -14,11 +14,11 @@ import com.flux.domain.Transaction;
 import com.flux.manager.TransactionsManager;
 
 @Controller
-@RequestMapping("/home/transactionList.do")
+@RequestMapping("/showTransactions.do")
 public class TransactionListController {
 
 	public static final String ACCOUNT_ID_PARAMETER_NAME = "accountId";
-	public static final String HOMEPAGE_PATH = "homepage/homepage";
+	public static final String HOMEPAGE_PATH = "homepage/transactionsView";
 	public static final String TRANSACTIONS_ATTRIBUTE_NAME = "transactions";
 	
 	private static final Logger LOGGER = Logger.getLogger(TransactionListController.class);
