@@ -10,6 +10,17 @@
 	width: 100%; 
 	height:100%; 
 }
+.main-content-div{
+	width: 100%; 
+	height: 100%; 
+	background-size: 100% 100%;
+}
+.init-page-content{	
+background:url(../../images/Penguins.jpg) no-repeat; 
+}
+.transactions-page-content{
+background:url(../../images/Penguins_working.jpg) no-repeat; 	
+}
 div.ui-dialog-titlebar{
 	display: none;
 }

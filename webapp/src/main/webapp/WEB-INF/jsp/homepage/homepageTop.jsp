@@ -27,5 +27,4 @@
 				</div>				
 		</td>
 		<td width="80%">
-			<div style="width: 100%; height: 100%; background:url(layout/images/Penguins.jpg) no-repeat, yellow; background-size: 100% 100%;">
 		

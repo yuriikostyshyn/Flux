@@ -1,1 +1,1 @@
-<%@ include file="homepageTop.jsp"%><table style="width: 100%; height: 100%;">	<thead>		<tr>		<th>Sender account number</th>		<th>Receiver account number</th>		<th>Start Date</th>		</tr>	</thead></table><%@ include file="homepageBottom.jsp"%>
+<%@ include file="homepageTop.jsp"%><div class="main-content-div transactions-page-content">	<table style="width: 100%; height: 100%;">		<thead>			<tr>			<th>Sender account number</th>			<th>Receiver account number</th>			<th>Start Date</th>			</tr>		</thead>	</table><%@ include file="homepageBottom.jsp"%>
