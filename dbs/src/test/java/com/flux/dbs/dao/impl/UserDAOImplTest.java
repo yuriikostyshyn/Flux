@@ -23,12 +23,7 @@ import com.flux.persistence.entities.UserEntity;
 
 public class UserDAOImplTest {
 	private static final String LOGIN = "login";
-
 	private static final String PASSWORD = "password";
-
-	private UserDAOImpl underTest;
-	private List<UserEntity> resultUserEntities;
-	private UserEntity resultUserEntity;
 
 	@Mock
 	private EntityManager entityManagerMock;
@@ -36,6 +31,10 @@ public class UserDAOImplTest {
 	private Query getUserQueryMock;
 	@Mock
 	private Mapper mapperMock;
+
+	private UserDAOImpl underTest;
+	private List<UserEntity> resultUserEntities;
+	private UserEntity resultUserEntity;
 
 	@Before
 	public void setUp() {

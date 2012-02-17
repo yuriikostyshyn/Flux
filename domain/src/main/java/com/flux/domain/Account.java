@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 public class Account {
 	private User user;
-	private BigInteger accountId;
+	private long accountId;
 	private int bankId;
 	private Currency currency;
 	private double amount;
@@ -18,11 +18,11 @@ public class Account {
 		this.user = user;
 	}
 
-	public BigInteger getAccountId() {
+	public long getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(BigInteger accountId) {
+	public void setAccountId(long accountId) {
 		this.accountId = accountId;
 	}
 

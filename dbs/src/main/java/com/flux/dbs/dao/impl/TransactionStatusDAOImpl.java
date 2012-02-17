@@ -20,7 +20,7 @@ public class TransactionStatusDAOImpl extends TransactionStatusDAO{
 
 	@Override
 	public TransactionStatus getStatusById(Integer statusId) {
-		TransactionStatus resultTransactionStatus = null;
+		TransactionStatus resultTransactionStatus = new TransactionStatus();
 		
 		Query getStatusQuery = entityManager.createNamedQuery(GET_STATUS_BY_ID_QUERY_NAME);
 		getStatusQuery.setParameter(1, statusId);

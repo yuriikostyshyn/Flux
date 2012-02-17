@@ -24,16 +24,16 @@ import com.flux.persistence.entities.TransactionStatusEntity;
 public class TransactionStatusDAOImplTest {
 	private static final int STATUS_ID = 1;
 
-	private TransactionStatusDAOImpl underTest;
-	private List<TransactionStatusEntity> resultTransactionStatusEntities;
-	private TransactionStatusEntity resultTransactionStatusEntity;
-
 	@Mock
 	private EntityManager entityManagerMock;
 	@Mock
 	private Query getTransactionStatusQueryMock;
 	@Mock
 	private Mapper mapperMock;
+
+	private TransactionStatusDAOImpl underTest;
+	private List<TransactionStatusEntity> resultTransactionStatusEntities;
+	private TransactionStatusEntity resultTransactionStatusEntity;
 
 	@Before
 	public void setUp() {

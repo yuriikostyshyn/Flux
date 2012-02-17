@@ -20,7 +20,7 @@ public class CurrencyDAOImpl extends CurrencyDAO {
 
 	@Override
 	public Currency getCurrencyById(Integer currencyId) {
-		Currency resultCurrency = null;
+		Currency resultCurrency = new Currency();
 
 		Query getCurrencyQuery = entityManager.createNamedQuery(GET_CURRENCY_BY_ID_QUERY_NAME);
 		getCurrencyQuery.setParameter(1, currencyId);
