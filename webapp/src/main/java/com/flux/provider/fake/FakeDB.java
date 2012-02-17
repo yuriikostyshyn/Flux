@@ -64,6 +64,30 @@ public class FakeDB {
 		
 		transactions.add(transaction);
 		
+		Transaction secondTransaction = new Transaction();
+		secondTransaction.setTransactionId(2);
+		
+		TransactionStatus secondStatus = new TransactionStatus();
+		secondStatus.setStatusId(1);
+		secondStatus.setStatusMessage(TRANSACTION_STATUS);
+		secondTransaction.setStatus(secondStatus);
+		
+		Account secondAccountTo = new Account();
+		secondAccountTo.setAccountId(2);
+		secondAccountTo.setAmount(12.11);
+		secondAccountTo.setBankId(2);
+		secondAccountTo.setCurrency(null);
+		Account secondAccountFrom = secondAccountTo;
+		secondTransaction.setAccountTo(secondAccountTo);
+		secondTransaction.setAccountFrom(secondAccountFrom);
+		
+		secondTransaction.setAmount(12.1212);
+		
+		Date secondStartDate = new Date(System.currentTimeMillis() - 50000000);
+		Date secondEndDate = new Date(System.currentTimeMillis() + 50000000);
+		secondTransaction.setStartDate(secondStartDate);
+		secondTransaction.setEndDate(secondEndDate);
+		transactions.add(secondTransaction);
 		return transactions;
 	}
 

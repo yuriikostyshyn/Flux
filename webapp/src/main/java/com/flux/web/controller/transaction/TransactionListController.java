@@ -1,7 +1,10 @@
 package com.flux.web.controller.transaction;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.flux.domain.Transaction;
 import com.flux.manager.TransactionsManager;
 
 @Controller
-@RequestMapping("/showTransactions.do")
 public class TransactionListController {
 
 	public static final String ACCOUNT_ID_PARAMETER_NAME = "accountId";
@@ -25,14 +26,17 @@ public class TransactionListController {
 	
 	private TransactionsManager transactionsManager; 
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView showTransactionsForAccount(ModelAndView modelAndView){
-		ModelAndView resultModelAndView = modelAndView;
-		Map<String,Object> model = modelAndView.getModel();
+	@RequestMapping(value="/showTransactions.do", method=RequestMethod.GET)
+	public ModelAndView showAllTransactions(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView resultModelAndView = new ModelAndView(HOMEPAGE_PATH);
+			
+		Map<String,Object> model = new HashMap<String, Object>();
 		
-		transactionsManager.getTransactions(model);
+		transactionsManager.getAllTransactions(model);
 		
-		resultModelAndView.setViewName(HOMEPAGE_PATH);
+		resultModelAndView.addAllObjects(model);
+		LOGGER.info("transactions was added to request");
+		
 		return resultModelAndView;
 	}
 

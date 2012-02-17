@@ -5,5 +5,5 @@ import java.util.List;
 import com.flux.domain.Transaction;
 
 public interface TransactionProvider {
-	public List<Transaction> getTransactionByAccountId(long accountToId);
+	public List<Transaction> getAllTransactions();
 }
