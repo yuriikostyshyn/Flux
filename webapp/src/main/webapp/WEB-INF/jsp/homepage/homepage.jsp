@@ -1,3 +1,3 @@
 <%@ include file="homepageTop.jsp" %>
-		<div class="main-content-div init-page-content">
+		<div class="init-page-content main-content-div">
 <%@ include file="homepageBottom.jsp" %>

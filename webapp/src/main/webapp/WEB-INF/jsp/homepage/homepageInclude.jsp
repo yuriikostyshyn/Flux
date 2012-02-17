@@ -4,3 +4,5 @@
 <script type="text/javascript" src="layout/js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
 <script type="text/javascript" src="layout/js/logout/logoutDialog.js"></script>
 <script type="text/javascript" src="layout/js/homepage/homepageScripts.js"></script>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
