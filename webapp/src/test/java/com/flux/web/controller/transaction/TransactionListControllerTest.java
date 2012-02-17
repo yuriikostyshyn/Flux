@@ -1,10 +1,16 @@
 package com.flux.web.controller.transaction;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,24 +20,30 @@ public class TransactionListControllerTest {
 		
 	@Mock
 	private TransactionsManager transactionsManager;
+	@Mock
+	private HttpServletRequest request;
+	@Mock
+	private HttpServletResponse response;
 	
 	private TransactionListController underTest;	
-	private ModelAndView modelAndView;
 	
 	
 	@Before
 	public void setUp(){
 		underTest = new TransactionListController();
-		modelAndView = new ModelAndView();		
-		
 		MockitoAnnotations.initMocks(this);
 		underTest.setTransactionsManager(transactionsManager);
 	}
 	
 	@Test
 	public void shouldRedirectToHomePage(){
-		underTest.showTransactionsForAccount(modelAndView);
-	
-		Assert.assertEquals(TransactionListController.HOMEPAGE_PATH, modelAndView.getViewName());
+		ModelAndView resultModelAndView = underTest.showAllTransactions(request, response);	
+		Assert.assertEquals(TransactionListController.HOMEPAGE_PATH, resultModelAndView.getViewName());
+	}	
+	@Test
+	public void shouldCallManager(){
+		ModelAndView resultModelAndView = underTest.showAllTransactions(request, response);
+		Map<String, Object> model = resultModelAndView.getModel();
+		Mockito.verify(transactionsManager).getAllTransactions(model);
 	}	
 }

@@ -19,10 +19,6 @@ import com.flux.provider.TransactionProvider;
 
 public class TransactionsManagerTest {
 	
-	private static final long ACCOUNT_ID = 1;
-
-	private static final String INCORRECT_ACCOUNT_ID = "incorrect account id";
-
 	@Mock
 	private TransactionProvider mockTransactionProvider;
 	
@@ -42,30 +38,12 @@ public class TransactionsManagerTest {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	public void shouldAddTransactionsToModelIfAccountIdPresents(){
+	public void shouldAddAllTransactionsToModel(){
 		List<Transaction> transactions = new ArrayList<Transaction>();
-		model.put(TransactionsManager.ACCOUNT_ID_ATTRIBUTE_NAME, ACCOUNT_ID);
-		Mockito.when(mockTransactionProvider.getTransactionByAccountId(ACCOUNT_ID)).thenReturn(transactions);
-		underTest.getTransactions(model);
+		Mockito.when(mockTransactionProvider.getAllTransactions()).thenReturn(transactions);
+		underTest.getAllTransactions(model);
 		List<Transaction> resultTransactions = (List<Transaction>)model.get(TransactionsManager.TRANSACTIONS_ATTRIBUTE_NAME); 
 		Assert.assertEquals(transactions, resultTransactions);
 		
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Test
-	public void shouldAddEmptyListToModelIfAccountIdIsAbsent(){
-		underTest.getTransactions(model);
-		List<Transaction> resultTransactions = (List<Transaction>)model.get(TransactionsManager.TRANSACTIONS_ATTRIBUTE_NAME); 
-		Assert.assertEquals(Collections.EMPTY_LIST, resultTransactions);
-	}
-	@SuppressWarnings("unchecked")
-	@Test
-	public void shouldAddEmptyListToModelIfAccountIdHasIncorrectFormat(){
-		underTest.getTransactions(model);
-		model.put(TransactionsManager.ACCOUNT_ID_ATTRIBUTE_NAME, INCORRECT_ACCOUNT_ID);
-		List<Transaction> resultTransactions = (List<Transaction>)model.get(TransactionsManager.TRANSACTIONS_ATTRIBUTE_NAME); 
-		Assert.assertEquals(Collections.EMPTY_LIST, resultTransactions);
-	}
-	
+	}	
 }
