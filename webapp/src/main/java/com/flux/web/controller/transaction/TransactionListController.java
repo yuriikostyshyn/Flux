@@ -32,7 +32,7 @@ public class TransactionListController {
 			
 		Map<String,Object> model = new HashMap<String, Object>();
 		
-		transactionsManager.getAllTransactions(model);
+		transactionsManager.addAllTransactionsToModel(model);
 		
 		resultModelAndView.addAllObjects(model);
 		LOGGER.info("transactions was added to request");

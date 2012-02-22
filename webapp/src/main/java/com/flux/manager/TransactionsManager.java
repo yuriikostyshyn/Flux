@@ -17,7 +17,7 @@ public class TransactionsManager {
 
 	private TransactionProvider transactionProvider;
 
-	public void getAllTransactions(Map<String, Object> model) {
+	public void addAllTransactionsToModel(Map<String, Object> model) {
 		List<Transaction> resultTransactions = transactionProvider.getAllTransactions();
 
 		model.put(TRANSACTIONS_ATTRIBUTE_NAME, resultTransactions);

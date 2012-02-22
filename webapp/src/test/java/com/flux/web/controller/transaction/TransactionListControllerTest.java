@@ -19,11 +19,11 @@ import com.flux.manager.TransactionsManager;
 public class TransactionListControllerTest {
 		
 	@Mock
-	private TransactionsManager transactionsManager;
+	private TransactionsManager mockTransactionsManager;
 	@Mock
-	private HttpServletRequest request;
+	private HttpServletRequest mockRequest;
 	@Mock
-	private HttpServletResponse response;
+	private HttpServletResponse mockResponse;
 	
 	private TransactionListController underTest;	
 	
@@ -32,18 +32,18 @@ public class TransactionListControllerTest {
 	public void setUp(){
 		underTest = new TransactionListController();
 		MockitoAnnotations.initMocks(this);
-		underTest.setTransactionsManager(transactionsManager);
+		underTest.setTransactionsManager(mockTransactionsManager);
 	}
 	
 	@Test
 	public void shouldRedirectToHomePage(){
-		ModelAndView resultModelAndView = underTest.showAllTransactions(request, response);	
+		ModelAndView resultModelAndView = underTest.showAllTransactions(mockRequest, mockResponse);	
 		Assert.assertEquals(TransactionListController.HOMEPAGE_PATH, resultModelAndView.getViewName());
 	}	
 	@Test
 	public void shouldCallManager(){
-		ModelAndView resultModelAndView = underTest.showAllTransactions(request, response);
+		ModelAndView resultModelAndView = underTest.showAllTransactions(mockRequest, mockResponse);
 		Map<String, Object> model = resultModelAndView.getModel();
-		Mockito.verify(transactionsManager).getAllTransactions(model);
+		Mockito.verify(mockTransactionsManager).addAllTransactionsToModel(model);
 	}	
 }

@@ -41,7 +41,7 @@ public class TransactionsManagerTest {
 	public void shouldAddAllTransactionsToModel(){
 		List<Transaction> transactions = new ArrayList<Transaction>();
 		Mockito.when(mockTransactionProvider.getAllTransactions()).thenReturn(transactions);
-		underTest.getAllTransactions(model);
+		underTest.addAllTransactionsToModel(model);
 		List<Transaction> resultTransactions = (List<Transaction>)model.get(TransactionsManager.TRANSACTIONS_ATTRIBUTE_NAME); 
 		Assert.assertEquals(transactions, resultTransactions);
 		
