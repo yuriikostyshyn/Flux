@@ -1,5 +1,5 @@
-function showTransactions() {
-	location.replace("showTransactions.do");
+function showPage(pagePath) {
+	location.replace(pagePath);
 	}
 function extendTransaction(rowId, imageId){
 	

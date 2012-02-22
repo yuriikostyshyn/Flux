@@ -18,7 +18,7 @@
 .init-page-content{	
 background:url(../../images/Penguins.jpg) no-repeat; 
 }
-.transactions-page-content{
+.filled-page-content{
 background:url(../../images/Penguins_working.jpg) no-repeat;
 }
 button.ui-button{
