@@ -41,3 +41,9 @@ div.ui-dialog-titlebar{
 	margin-left: 20px;
 	width: 70%;
 }
+.account-list-button{
+	width:15%; 
+	height:40px; 
+	margin-left: 10%;
+	margin-bottom: 20px;
+}
