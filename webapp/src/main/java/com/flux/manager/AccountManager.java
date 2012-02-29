@@ -14,44 +14,96 @@ import org.springframework.stereotype.Component;
 
 import com.flux.domain.Account;
 import com.flux.domain.User;
+import com.flux.provider.AccountDataProvider;
 import com.flux.provider.AccountProvider;
 
 @Component
 public class AccountManager {
 
+	public static final String SELECTED_ACCOUNT_ATTRIBUTE_NAME = "selectedAccount";
+	public static final String SELECTED_ACCOUNT_ID_PARAMETER_NAME = "selectedAccountId";
 	public static final String ACCOUNTS_ATTRIBUTE_NAME = "accounts";
 	public static final String USER_ATTRIBUTE_NAME = "user";
 	private static final Logger LOGGER = Logger.getLogger(UserManager.class);
-	
+
 	private AccountProvider accountProvider;
+	private AccountDataProvider accountDataProvider;
 
 	public Map<String, Object> addAccountsByUserIdToModel(HttpServletRequest request) {
 		Map<String, Object> resultModel = new HashMap<String, Object>();
-		HttpSession session = request.getSession();
-		
-		try {
-			User user = (User) session.getAttribute(USER_ATTRIBUTE_NAME);
-			
-			if (user != null) {
-				int userId = user.getUserId();
-				List<Account> resultAccounts = accountProvider.getAccountsByUserId(userId);
-				resultModel.put(ACCOUNTS_ATTRIBUTE_NAME, resultAccounts);
-			} else {
-				resultModel.put(ACCOUNTS_ATTRIBUTE_NAME, Collections.EMPTY_LIST);
-			}
-			
-		} catch (ClassCastException ex) {
-			LOGGER.error("Incorrect type of user attribute in session",ex);
-			resultModel.put(ACCOUNTS_ATTRIBUTE_NAME, Collections.EMPTY_LIST);
-		}
-		
+
+		addAccountsByUserIdToModel(resultModel, request);
+
 		return resultModel;
 	}
 
+	public Map<String, Object> addAccountReviewByAccountIdToModel(HttpServletRequest request) {
+		Map<String, Object> resultModel = new HashMap<String, Object>();
+
+		addAccountsByUserIdToModel(resultModel, request);
+		addAccountByIdToModel(request, resultModel);
+
+		return resultModel;
+	}
+
+	private void addAccountsByUserIdToModel(Map<String, Object> resultModel, HttpServletRequest request) {
+		List<Account> accounts = getAccountsByUserId(request);
+		resultModel.put(ACCOUNTS_ATTRIBUTE_NAME, accounts);
+	}
+
+	private void addAccountByIdToModel(HttpServletRequest request, Map<String, Object> resultModel) {
+		Account selectedAccount = getAccountById(request);
+		resultModel.put(SELECTED_ACCOUNT_ATTRIBUTE_NAME, selectedAccount);
+	}
+
+	private List<Account> getAccountsByUserId(HttpServletRequest request) {
+		List<Account> resultAccounts = Collections.EMPTY_LIST;
+		try {
+			int userId = getUserId(request);
+			resultAccounts = accountProvider.getAccountsByUserId(userId);
+		} catch (ClassCastException ex) {
+			LOGGER.error("Incorrect type of user attribute in session", ex);
+		}
+		return resultAccounts;
+	}
+
+	private Account getAccountById(HttpServletRequest request) {
+		Account resultSelectedAccount = new Account();
+		try {
+			long selectedAccountId = getSelectedAccountId(request);
+
+			resultSelectedAccount = accountDataProvider.getAccountById(selectedAccountId);
+		} catch (NumberFormatException ex) {
+			LOGGER.error("Incorrect type of selected account id parameter", ex);
+		}
+		return resultSelectedAccount;
+	}	
+
+	private int getUserId(HttpServletRequest request) throws ClassCastException{
+		HttpSession session = request.getSession();
+		int resultUserId = 0;
+		User user = (User) session.getAttribute(USER_ATTRIBUTE_NAME);
+		if (user != null) {
+			resultUserId = user.getUserId();
+		}
+		return resultUserId;
+	}
+	
+	private long getSelectedAccountId(HttpServletRequest request) throws NumberFormatException {
+		String selectedIdParameter = request.getParameter(SELECTED_ACCOUNT_ID_PARAMETER_NAME);
+		long resultSelectedAccountId = Long.valueOf(selectedIdParameter);
+		return resultSelectedAccountId;
+	}
+
+	
 	@Autowired
 	public void setAccountProvider(AccountProvider accountProvider) {
 		this.accountProvider = accountProvider;
+	}
 
+	@Autowired
+	public void setAccountDataProvider(AccountDataProvider accountDataProvider) {
+		this.accountDataProvider = accountDataProvider;
 	}
 
 }

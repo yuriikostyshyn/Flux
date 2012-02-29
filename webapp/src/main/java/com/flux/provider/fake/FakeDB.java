@@ -121,6 +121,7 @@ public class FakeDB {
 		accountOne.setCurrency(dollar);
 		accountOne.setSecurityKey("securityKey");
 		accountOne.setUser(firstUser);
+		accountOne.setAmount(1243);
 		resultAccounts.add(accountOne);
 
 		Account accountTwo = new Account();
@@ -129,6 +130,7 @@ public class FakeDB {
 		accountTwo.setCurrency(hryvnja);
 		accountTwo.setSecurityKey("securityKey");
 		accountTwo.setUser(firstUser);
+		accountTwo.setAmount(1222);
 		resultAccounts.add(accountTwo);
 
 		Account accountThree = new Account();
@@ -137,6 +139,7 @@ public class FakeDB {
 		accountThree.setCurrency(hryvnja);
 		accountThree.setSecurityKey("securityKey");
 		accountThree.setUser(secondUser);
+		accountThree.setAmount(3333);
 		resultAccounts.add(accountThree);
 
 		Account accountFour = new Account();
@@ -145,6 +148,7 @@ public class FakeDB {
 		accountFour.setCurrency(dollar);
 		accountFour.setSecurityKey("securityKey");
 		accountFour.setUser(secondUser);
+		accountFour.setAmount(44.33);
 		resultAccounts.add(accountFour);
 		return resultAccounts;
 	}
@@ -159,6 +163,17 @@ public class FakeDB {
 		}
 		
 		return resultAccounts;
+	}
+	
+	public static Account getAccountById(long accountId){
+		Account resultAccount = new Account();
+		
+		for(Account account:accounts){
+			if(account.getAccountId() == accountId){
+				resultAccount = account;
+			}
+		}
+		return resultAccount;
 	}
 
 	public static void setUsers(List<User> users) {
