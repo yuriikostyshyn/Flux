@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 
 public class LoginFilter implements Filter {
 
-	private static final String USER_PARAMETR = "user";
+	private static final String USER_ATTRIBUTE_NAME = "user";
 	private static final String FLUX_LOGIN_DO = "/flux/login.do";
 	private static final String LOGIN_DO = "login.do";
 	private static final Logger LOGGER = Logger.getLogger(LoginFilter.class);
@@ -33,7 +33,7 @@ public class LoginFilter implements Filter {
 		final String servletPath = httpServletRequest.getServletPath();
 		final boolean isLoginUri = servletPath.endsWith(
 				LOGIN_DO);
-		final boolean isLoginedUser = httpSession.getAttribute(USER_PARAMETR) != null;
+		final boolean isLoginedUser = httpSession.getAttribute(USER_ATTRIBUTE_NAME) != null;
 		LOGGER.debug("URI:" + httpServletRequest.getRequestURI());
 		if (isLoginUri && isLoginedUser) {
 			httpServletResponse.sendRedirect(servletPath);
