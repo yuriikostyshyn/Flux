@@ -56,26 +56,22 @@ public class AccountManagerTest {
 		Mockito.when(mockSession.getAttribute(AccountManager.USER_ATTRIBUTE_NAME)).thenReturn(mockUser);
 		Mockito.when(mockUser.getUserId()).thenReturn(USER_ID);
 		Mockito.when(mockAccountProvider.getAccountsByUserId(USER_ID)).thenReturn(mockAccounts);
-		Map<String, Object> resultModel = underTest.addAccountsByUserIdToModel(mockRequest);
-		Assert.assertEquals(mockAccounts, resultModel.get(AccountManager.ACCOUNTS_ATTRIBUTE_NAME));
+		underTest.addAccountsToResult(mockRequest);
+		Mockito.verify(mockSession).setAttribute(AccountManager.ACCOUNTS_ATTRIBUTE_NAME, mockAccounts);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldAddEmptyListToModelIfUserIdIsAbsent() {
-		Map<String, Object> resultModel = underTest.addAccountsByUserIdToModel(mockRequest);
-		List<Account> resultAccounts = (List<Account>) resultModel.get(AccountManager.ACCOUNTS_ATTRIBUTE_NAME);
-		Assert.assertEquals(Collections.EMPTY_LIST, resultAccounts);
+		underTest.addAccountsToResult(mockRequest);
+		Mockito.verify(mockSession).setAttribute(AccountManager.ACCOUNTS_ATTRIBUTE_NAME, Collections.EMPTY_LIST);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldAddEmptyListToModelIfUserIdHasIncorrectType() {
 		Mockito.when(mockSession.getAttribute(AccountManager.USER_ATTRIBUTE_NAME)).thenReturn(
 				INCORRECT_TYPED_ATTRIBUTE_NAME);
-		Map<String, Object> resultModel = underTest.addAccountsByUserIdToModel(mockRequest);
-		List<Account> resultAccounts = (List<Account>) resultModel.get(AccountManager.ACCOUNTS_ATTRIBUTE_NAME);
-		Assert.assertEquals(Collections.EMPTY_LIST, resultAccounts);
+		underTest.addAccountsToResult(mockRequest);
+		Mockito.verify(mockSession).setAttribute(AccountManager.ACCOUNTS_ATTRIBUTE_NAME, Collections.EMPTY_LIST);
 	}
 
 	@Test

@@ -50,24 +50,24 @@ public class AccountControllerTest {
 	@Test
 	public void shouldCallAddAccountsByUserIdMethodOfAccountsManagerInstance() {
 		underTest.showAccountsByUserId(mockRequest, mockResponse);
-		Mockito.verify(mockAccountManager, Mockito.times(1)).addAccountsByUserIdToModel(mockRequest);
+		Mockito.verify(mockAccountManager, Mockito.times(1)).addAccountsToResult(mockRequest);
 	}
-	
+
 	@Test
 	public void shouldCallAddAccountReviewByAccountIdMethodOfAccountsManagerInstance() {
 		underTest.showAccountReviewByAccountId(mockRequest, mockResponse);
 		Mockito.verify(mockAccountManager, Mockito.times(1)).addAccountReviewByAccountIdToModel(mockRequest);
 	}
+
 	@Test
 	public void shouldAddModelReturnedByAccountsManagerInstanceToResult() {
 		model.put(MAP_DUMMY_ELEMENT, MAP_DUMMY_ELEMENT);
-		Mockito.when(mockAccountManager.addAccountsByUserIdToModel(mockRequest)).thenReturn(model);
-		ModelAndView resultModelAndView = underTest.showAccountsByUserId(mockRequest, mockResponse);
+		Mockito.when(mockAccountManager.addAccountReviewByAccountIdToModel(mockRequest)).thenReturn(model);
+		ModelAndView resultModelAndView = underTest.showAccountReviewByAccountId(mockRequest, mockResponse);
 
 		Map<String, Object> resultModel = resultModelAndView.getModel();
 		Assert.assertTrue(resultModel.containsKey(MAP_DUMMY_ELEMENT));
 		String resultMapDummyElement = (String) resultModelAndView.getModel().get(MAP_DUMMY_ELEMENT);
 		Assert.assertEquals(MAP_DUMMY_ELEMENT, resultMapDummyElement);
 	}
-	
 }

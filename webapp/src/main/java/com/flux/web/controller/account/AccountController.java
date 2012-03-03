@@ -18,26 +18,36 @@ import com.flux.manager.AccountManager;
 @Controller
 public class AccountController {
 
+	private static final String SHOW_ACCOUNTS_SERVLET_PATH = "/showAccounts.do";
+
+	public static final String GET_ACCOUNT_REVIEW_SERVLET_PATH = "/getAccountReview.do";
+
 	public static final String ACCOUNTS_VIEW_PAGE_PATH = "homepage/accountsView";
 
 	private AccountManager accountManager;
 
-	@RequestMapping(value = "/showAccounts.do", method = RequestMethod.GET)
+	@RequestMapping(value = SHOW_ACCOUNTS_SERVLET_PATH, method = RequestMethod.GET)
 	public ModelAndView showAccountsByUserId(HttpServletRequest request, HttpServletResponse response) {
-		Map<String, Object> model = accountManager.addAccountsByUserIdToModel(request);
-		return getModelAndViewAWithAttributes(model);
+		accountManager.addAccountsToResult(request);
+		return getModelAndView();
 	}
 
-	@RequestMapping(value = "/getAccountReview.do", method = RequestMethod.GET)
+	@RequestMapping(value = GET_ACCOUNT_REVIEW_SERVLET_PATH, method = RequestMethod.GET)
 	public ModelAndView showAccountReviewByAccountId(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> model = accountManager.addAccountReviewByAccountIdToModel(request);
-		return getModelAndViewAWithAttributes(model);
+		return getModelAndViewWithAttributes(model);
+	}
+	
+	private ModelAndView getModelAndView() {
+		ModelAndView resultModelAndView = new ModelAndView(ACCOUNTS_VIEW_PAGE_PATH);
+		return resultModelAndView;
 	}
 
-	private ModelAndView getModelAndViewAWithAttributes(Map<String, Object> model) {
+	private ModelAndView getModelAndViewWithAttributes(Map<String, Object> model) {
 		ModelAndView resultModelAndView = new ModelAndView(ACCOUNTS_VIEW_PAGE_PATH);
 
 		resultModelAndView.addAllObjects(model);
+		
 		return resultModelAndView;
 	}
 
@@ -45,9 +55,4 @@ public class AccountController {
 	public void setAccountManager(AccountManager accountManager) {
 		this.accountManager = accountManager;
 	}
-
-	public ModelAndView showReviewByAccountId(HttpServletRequest mockRequest, HttpServletResponse mockResponse) {
-		return null;
-	}
-
 }
