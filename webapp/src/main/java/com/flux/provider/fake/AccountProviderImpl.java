@@ -16,4 +16,10 @@ public class AccountProviderImpl implements AccountProvider{
 		return resultAccounts;
 	}
 
+	@Override
+	public void saveNewAccount(Account account) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
