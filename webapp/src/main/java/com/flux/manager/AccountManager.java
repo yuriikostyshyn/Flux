@@ -1,5 +1,6 @@
 package com.flux.manager;
 
+import java.security.ProviderException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -13,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.flux.domain.Account;
+import com.flux.domain.Currency;
 import com.flux.domain.User;
 import com.flux.provider.AccountDataProvider;
 import com.flux.provider.AccountProvider;
-import com.web.utils.exception.InvalidUserException;
+import com.flux.provider.CurrencyProvider;
+import com.flux.web.util.exception.InvalidUserException;
 
 @Component
 public class AccountManager {
@@ -29,6 +32,7 @@ public class AccountManager {
 
 	private AccountProvider accountProvider;
 	private AccountDataProvider accountDataProvider;
+	private CurrencyProvider currencyProvider;
 
 	public void addAccountsToResult(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -41,6 +45,20 @@ public class AccountManager {
 		addAccountByIdToModel(request, resultModel);
 
 		return resultModel;
+	}
+
+	public void saveNewAccount(Account newAccount) {
+		try {
+			accountProvider.saveNewAccount(newAccount);
+		} catch (ProviderException ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}
+	}
+
+	public Map<String, Currency> getCurrencies() {
+		Map<String, Currency> resultCurrencies = currencyProvider.getAllCurrenciesMap();
+
+		return resultCurrencies;
 	}
 
 	private void addAccountsToSession(HttpSession session) {
@@ -110,6 +128,11 @@ public class AccountManager {
 	@Autowired
 	public void setAccountDataProvider(AccountDataProvider accountDataProvider) {
 		this.accountDataProvider = accountDataProvider;
+	}
+
+	@Autowired
+	public void setCurrencyProvider(CurrencyProvider currencyProvider) {
+		this.currencyProvider = currencyProvider;
 	}
 
 }
