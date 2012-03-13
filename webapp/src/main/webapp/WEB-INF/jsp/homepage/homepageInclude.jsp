@@ -6,3 +6,4 @@
 <script type="text/javascript" src="layout/js/homepage/homepageScripts.js"></script>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>

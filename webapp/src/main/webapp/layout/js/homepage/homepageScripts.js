@@ -21,3 +21,16 @@ function extendTransaction(rowId, imageId){
 		image.setAttribute(IMAGE_SOURCE_ATTRIBUTE_NAME, EXTEND_BUTTON_IMAGE_PATH);
 		}
 	}
+
+$(function() {
+	$('#new-account-dialog').dialog({
+		modal : true,
+		autoOpen : false,
+		resizable: false,
+		width: 400,
+		height: 200,
+	});
+	$('#new-account-button').click(function() {
+		$('#new-account-dialog').dialog("open");
+	});
+});

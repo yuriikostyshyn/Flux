@@ -28,7 +28,7 @@
 				<p style="margin-left:60px;">Account ${selectedAccount.accountId} state: ${selectedAccount.amount}</p>
 			</c:if>
 			<div>
-					<input type="button" value="Add new account" class="account-list-button"/>
+					<input type="button" value="Add new account" onclick="showPage('newAccount.do')" class="account-list-button"/>
 					<input type="submit" value="Get review" class="account-list-button"/>
 			</div>
 		</form>
