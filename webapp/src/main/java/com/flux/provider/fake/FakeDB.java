@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.flux.domain.Account;
 import com.flux.domain.Currency;
@@ -22,10 +23,12 @@ public class FakeDB {
 	private static List<User> users;
 	private static List<Transaction> transactions;
 	private static List<Account> accounts;
+	private static List<Currency> currencies;
 	static {
 		setUsers(formUsers());
 		setTransactions(formTransactions());
 		setAccounts(formAccounts());
+		setCurrencies(formCurrencies());
 	}
 
 	private static List<User> formUsers() {
@@ -96,7 +99,7 @@ public class FakeDB {
 		return transactions;
 	}
 
-	public static List<Account> formAccounts() {
+	private static List<Account> formAccounts() {
 		List<Account> resultAccounts = new ArrayList<Account>();
 
 		Currency hryvnja = new Currency();
@@ -153,27 +156,49 @@ public class FakeDB {
 		return resultAccounts;
 	}
 
-	public static List<Account> getAccountsByUserId(int userId){
+	private static List<Currency> formCurrencies() {
+		List<Currency> resultCurrencies = new ArrayList<Currency>();
+
+		Currency uah = new Currency();
+		uah.setCurrencyId(1);
+		uah.setLongName("hryvna");
+		uah.setName("UAH");
+		resultCurrencies.add(uah);
+
+		Currency usd = new Currency();
+		usd.setCurrencyId(2);
+		usd.setLongName("US dollar");
+		usd.setName("USD");
+		resultCurrencies.add(usd);
+
+		return resultCurrencies;
+	}
+
+	public static List<Account> getAccountsByUserId(int userId) {
 		List<Account> resultAccounts = new ArrayList<Account>();
-		
-		for(Account account:accounts){
-			if(account.getUser().getUserId() == userId){
+
+		for (Account account : accounts) {
+			if (account.getUser().getUserId() == userId) {
 				resultAccounts.add(account);
 			}
 		}
-		
+
 		return resultAccounts;
 	}
-	
-	public static Account getAccountById(long accountId){
+
+	public static Account getAccountById(long accountId) {
 		Account resultAccount = new Account();
-		
-		for(Account account:accounts){
-			if(account.getAccountId() == accountId){
+
+		for (Account account : accounts) {
+			if (account.getAccountId() == accountId) {
 				resultAccount = account;
 			}
 		}
 		return resultAccount;
+	}
+
+	public static List<Currency> getAllCurrencies() {		
+		return currencies;
 	}
 
 	public static void setUsers(List<User> users) {
@@ -195,4 +220,9 @@ public class FakeDB {
 	public static void setAccounts(List<Account> accounts) {
 		FakeDB.accounts = accounts;
 	}
+
+	public static void setCurrencies(List<Currency> currencies) {
+		FakeDB.currencies = currencies;
+	}
+
 }
