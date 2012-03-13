@@ -1,4 +1,5 @@
 require 'dependencies'
+require 'buildr/java/emma'
 Project.local_task :deploy
 Project.local_task :unix_deploy
 
