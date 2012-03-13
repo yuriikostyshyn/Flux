@@ -13,6 +13,8 @@
 	<context:component-scan base-package="com.flux.web.controller" />
 	<context:component-scan base-package="com.flux.provider.fake" />
 	<context:component-scan base-package="com.flux.manager" />
+	<context:component-scan base-package="com.flux.web.util" />
+
 	<beans:bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="viewClass"

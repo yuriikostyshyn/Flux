@@ -1,4 +1,4 @@
-package com.web.utils.exception;
+package com.flux.web.util.exception;
 
 public class InvalidUserException extends RuntimeException {
 
