@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import junit.framework.Assert;
 
 import org.junit.Before;
@@ -16,15 +18,25 @@ import org.mockito.MockitoAnnotations;
 
 import com.flux.domain.Transaction;
 import com.flux.provider.TransactionProvider;
+import com.flux.web.util.helper.RequestHelper;
 
 public class TransactionsManagerTest {
 	
+	private static final long ACCOUNT_ID = 1L;
+	
+	@Mock
+	private HttpServletRequest mockRequest;
 	@Mock
 	private TransactionProvider mockTransactionProvider;
+	@Mock
+	private RequestHelper mockRequestHelper;
+	@Mock
+	private List<Transaction> mockTransactions;
 	
 	private TransactionsManager underTest;
 	
 	private Map<String,Object> model;
+
 	
 
 	@Before
@@ -34,6 +46,7 @@ public class TransactionsManagerTest {
 		
 		MockitoAnnotations.initMocks(this);
 		underTest.setTransactionProvider(mockTransactionProvider);
+		underTest.setRequestHelper(mockRequestHelper);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -46,4 +59,15 @@ public class TransactionsManagerTest {
 		Assert.assertEquals(transactions, resultTransactions);
 		
 	}	
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldAddTransactionsToModelIfAccountIdIsCorrect(){
+		Mockito.when(mockRequestHelper.getSelectedAccountId(mockRequest)).thenReturn(ACCOUNT_ID);
+		Mockito.when(mockTransactionProvider.getTransactionsByAccountId(ACCOUNT_ID)).thenReturn(mockTransactions);
+		Map<String, Object> resultMap = underTest.addTransactionsByAccountIdToModel(mockRequest);
+		List<Transaction> resultTransactions = (List<Transaction>) resultMap.get(TransactionsManager.TRANSACTIONS_ATTRIBUTE_NAME);
+		Assert.assertEquals(mockTransactions, resultTransactions);
+		
+	}
 }
