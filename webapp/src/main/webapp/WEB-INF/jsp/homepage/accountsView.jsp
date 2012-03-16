@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ include file="homepageTop.jsp"%>
 <div class="main-content-div filled-page-content" >
-		<form action="getAccountReview.do" name="accountListViewForm" method="get">
+		<form name="accountListViewForm" method="get">
 			<div style="height:600px;  overflow: auto;">
 				<table  style="width:100%;text-align: center;">
 					<thead>
@@ -29,7 +29,8 @@
 			</c:if>
 			<div>
 					<input type="button" value="Add new account" onclick="showPage('newAccount.do')" class="account-list-button"/>
-					<input type="submit" value="Get review" class="account-list-button"/>
+					<input type="submit" value="Get review" class="account-list-button" formaction="getAccountReview.do" />
+					<input type="submit" value="Show transactions" class="account-list-button" formaction="showTransactions.do"/>
 			</div>
 		</form>
 <%@ include file="homepageBottom.jsp"%>

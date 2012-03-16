@@ -14,8 +14,6 @@
 	</tr>
 	<tr style="height:80%">
 		<td width ="20%">
-				<input type="button" value="Accounts" class="main-page-button" onclick="showPage('showAccounts.do')"/>
-				<br/>
 				<input type="button" value="Transactions" class="main-page-button" onclick="showPage('showTransactions.do')"/>
 				<br/>
 				<input type="button" value="Settings" class="main-page-button"/>
