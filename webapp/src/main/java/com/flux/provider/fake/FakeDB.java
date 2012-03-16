@@ -11,6 +11,7 @@ import com.flux.domain.Currency;
 import com.flux.domain.Transaction;
 import com.flux.domain.TransactionStatus;
 import com.flux.domain.User;
+import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 
 public class FakeDB {
 
@@ -96,6 +97,57 @@ public class FakeDB {
 		secondTransaction.setStartDate(secondStartDate);
 		secondTransaction.setEndDate(secondEndDate);
 		transactions.add(secondTransaction);
+		
+		Transaction thirdTransaction = new Transaction();
+		thirdTransaction.setTransactionId(3);
+
+		TransactionStatus thirdStatus = new TransactionStatus();
+		thirdStatus.setStatusId(1);
+		thirdStatus.setStatusMessage(TRANSACTION_STATUS);
+		thirdTransaction.setStatus(thirdStatus);
+
+		Account thirdAccountTo = new Account();
+		thirdAccountTo.setAccountId(1);
+		thirdAccountTo.setAmount(12.11);
+		thirdAccountTo.setBankId(1);
+		thirdAccountTo.setCurrency(null);
+		Account thirdAccountFrom = accountTo;
+		thirdTransaction.setAccountTo(thirdAccountTo);
+		thirdTransaction.setAccountFrom(thirdAccountFrom);
+
+		thirdTransaction.setAmount(12.1212);
+
+		Date thirdStartDate = new Date(System.currentTimeMillis());
+		Date thirdEndDate = new Date(System.currentTimeMillis() + 1000000);
+		thirdTransaction.setStartDate(thirdStartDate);
+		thirdTransaction.setEndDate(thirdEndDate);
+
+		transactions.add(thirdTransaction);
+
+		Transaction forthTransaction = new Transaction();
+		forthTransaction.setTransactionId(4);
+
+		TransactionStatus forthStatus = new TransactionStatus();
+		forthStatus.setStatusId(1);
+		forthStatus.setStatusMessage(TRANSACTION_STATUS);
+		forthTransaction.setStatus(forthStatus);
+
+		Account forthAccountTo = new Account();
+		forthAccountTo.setAccountId(2);
+		forthAccountTo.setAmount(12.11);
+		forthAccountTo.setBankId(2);
+		forthAccountTo.setCurrency(null);
+		Account forthAccountFrom = forthAccountTo;
+		forthTransaction.setAccountTo(forthAccountTo);
+		forthTransaction.setAccountFrom(forthAccountFrom);
+
+		forthTransaction.setAmount(12.1212);
+
+		Date forthStartDate = new Date(System.currentTimeMillis() - 50000000);
+		Date forthEndDate = new Date(System.currentTimeMillis() + 50000000);
+		forthTransaction.setStartDate(forthStartDate);
+		forthTransaction.setEndDate(forthEndDate);
+		transactions.add(forthTransaction);
 		return transactions;
 	}
 
@@ -197,8 +249,20 @@ public class FakeDB {
 		return resultAccount;
 	}
 
-	public static List<Currency> getAllCurrencies() {		
+	public static List<Currency> getAllCurrencies() {
 		return currencies;
+	}
+
+	public static List<Transaction> getTransactionsByAccountId(long accountId) {
+		List<Transaction> resultTransactions = new ArrayList<Transaction>();
+		
+		for (Transaction transaction : transactions) {
+			Account accountFrom = transaction.getAccountFrom();
+			if (accountFrom.getAccountId() == accountId) {
+				resultTransactions.add(transaction);
+			}
+		}
+		return resultTransactions;
 	}
 
 	public static void setUsers(List<User> users) {

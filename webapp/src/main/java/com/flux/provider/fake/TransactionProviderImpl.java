@@ -15,4 +15,9 @@ public class TransactionProviderImpl implements TransactionProvider{
 		List<Transaction> resultTransactions = FakeDB.getTransactions();
 	return resultTransactions;
 	}
+
+	@Override
+	public List<Transaction> getTransactionsByAccountId(long accountId) {
+		return FakeDB.getTransactionsByAccountId(accountId);
+	}
 }
