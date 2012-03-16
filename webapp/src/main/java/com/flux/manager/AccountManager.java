@@ -20,12 +20,12 @@ import com.flux.provider.AccountDataProvider;
 import com.flux.provider.AccountProvider;
 import com.flux.provider.CurrencyProvider;
 import com.flux.web.util.exception.InvalidUserException;
+import com.flux.web.util.helper.RequestHelper;
 
 @Component
 public class AccountManager {
 
 	public static final String SELECTED_ACCOUNT_ATTRIBUTE_NAME = "selectedAccount";
-	public static final String SELECTED_ACCOUNT_ID_PARAMETER_NAME = "selectedAccountId";
 	public static final String ACCOUNTS_ATTRIBUTE_NAME = "accounts";
 	public static final String USER_ATTRIBUTE_NAME = "user";
 	private static final Logger LOGGER = Logger.getLogger(UserManager.class);
@@ -33,6 +33,7 @@ public class AccountManager {
 	private AccountProvider accountProvider;
 	private AccountDataProvider accountDataProvider;
 	private CurrencyProvider currencyProvider;
+	private RequestHelper requestHelper;
 
 	public void addAccountsToResult(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -105,19 +106,13 @@ public class AccountManager {
 	private Account getAccountById(HttpServletRequest request) {
 		Account resultSelectedAccount = new Account();
 		try {
-			long selectedAccountId = getSelectedAccountId(request);
+			long selectedAccountId = requestHelper.getSelectedAccountId(request);
 
 			resultSelectedAccount = accountDataProvider.getAccountById(selectedAccountId);
 		} catch (NumberFormatException ex) {
 			LOGGER.error("Incorrect type of selected account id parameter", ex);
 		}
 		return resultSelectedAccount;
-	}
-
-	private long getSelectedAccountId(HttpServletRequest request) throws NumberFormatException {
-		String selectedIdParameter = request.getParameter(SELECTED_ACCOUNT_ID_PARAMETER_NAME);
-		long resultSelectedAccountId = Long.valueOf(selectedIdParameter);
-		return resultSelectedAccountId;
 	}
 
 	@Autowired
@@ -133,6 +128,11 @@ public class AccountManager {
 	@Autowired
 	public void setCurrencyProvider(CurrencyProvider currencyProvider) {
 		this.currencyProvider = currencyProvider;
+	}
+	
+	@Autowired
+	public void setRequestHelper(RequestHelper requestHelper) {
+		this.requestHelper = requestHelper;
 	}
 
 }

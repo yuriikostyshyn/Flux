@@ -23,6 +23,7 @@ import com.flux.provider.CurrencyProvider;
 import com.flux.provider.fake.AccountDataProviderImpl;
 import com.flux.provider.fake.AccountProviderImpl;
 import com.flux.web.util.exception.InvalidFormParametersException;
+import com.flux.web.util.helper.RequestHelper;
 
 public class AccountManagerTest {
 
@@ -35,20 +36,22 @@ public class AccountManagerTest {
 	@Mock
 	private HttpSession mockSession;
 	@Mock
-	private AccountProviderImpl mockAccountProvider;
-	@Mock
-	private AccountDataProviderImpl mockAccountDataProvider;
-	@Mock
 	private List<Account> mockAccounts;
 	@Mock
 	private User mockUser;
 	@Mock
-	private CurrencyProvider mockCurrencyProvider;
-	@Mock
 	private Map<String, Currency> mockCurrencies;
 	@Mock
 	private Account mockAccount;
-
+	@Mock
+	private AccountProviderImpl mockAccountProvider;
+	@Mock
+	private AccountDataProviderImpl mockAccountDataProvider;
+	@Mock
+	private RequestHelper mockRequestHelper;
+	@Mock
+	private CurrencyProvider mockCurrencyProvider;
+	
 	private AccountManager underTest;
 	
 	@Before
@@ -59,6 +62,7 @@ public class AccountManagerTest {
 		underTest.setAccountProvider(mockAccountProvider);
 		underTest.setAccountDataProvider(mockAccountDataProvider);
 		underTest.setCurrencyProvider(mockCurrencyProvider);
+		underTest.setRequestHelper(mockRequestHelper);
 	
 		Mockito.when(mockRequest.getSession()).thenReturn(mockSession);
 	}
@@ -93,9 +97,9 @@ public class AccountManagerTest {
 
 	@Test
 	public void shouldAddAccountToModelIfSelectedIdParameterIsCorrect() {
-		Mockito.when(mockRequest.getParameter(AccountManager.SELECTED_ACCOUNT_ID_PARAMETER_NAME)).thenReturn("1");
+		Mockito.when(mockRequestHelper.getSelectedAccountId(mockRequest)).thenReturn(1L);
 		Account dummyAccount = new Account();
-		Mockito.when(mockAccountDataProvider.getAccountById(1)).thenReturn(dummyAccount);
+		Mockito.when(mockAccountDataProvider.getAccountById(1L)).thenReturn(dummyAccount);
 	
 		Map<String, Object> resultModel = underTest.addAccountReviewByAccountIdToModel(mockRequest);
 		Account selectedAccount = (Account) resultModel.get(AccountManager.SELECTED_ACCOUNT_ATTRIBUTE_NAME);
@@ -104,18 +108,8 @@ public class AccountManagerTest {
 	}
 
 	@Test
-	public void shouldAddEmptyAccountIfSelectedIdParameterIsAbsent() {
-		Map<String, Object> resultModel = underTest.addAccountReviewByAccountIdToModel(mockRequest);
-	
-		Account selectedAccount = (Account) resultModel.get(AccountManager.SELECTED_ACCOUNT_ATTRIBUTE_NAME);
-	
-		Assert.assertEquals(EMPTY_ACCOUNT_ID, selectedAccount.getAccountId());
-	}
-
-	@Test
-	public void shouldAddEmptyAccountIfSelectedIdParameterCannotBeParsed() {
-		Mockito.when(mockRequest.getParameter(AccountManager.SELECTED_ACCOUNT_ID_PARAMETER_NAME)).thenReturn(
-				INCORRECT_TYPED_ATTRIBUTE_NAME);
+	public void shouldAddEmptyAccountIfRequestHelperThrowException() {
+		Mockito.when(mockRequestHelper.getSelectedAccountId(mockRequest)).thenThrow(new NumberFormatException());
 		
 		Map<String, Object> resultModel = underTest.addAccountReviewByAccountIdToModel(mockRequest);
 		Account selectedAccount = (Account) resultModel.get(AccountManager.SELECTED_ACCOUNT_ATTRIBUTE_NAME);
