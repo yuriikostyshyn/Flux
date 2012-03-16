@@ -27,12 +27,10 @@ public class TransactionListController {
 	private TransactionsManager transactionsManager; 
 	
 	@RequestMapping(value="/showTransactions.do", method=RequestMethod.GET)
-	public ModelAndView showAllTransactions(HttpServletRequest request, HttpServletResponse response){
+	public ModelAndView showTransactionsByAccountId(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView resultModelAndView = new ModelAndView(HOMEPAGE_PATH);
 			
-		Map<String,Object> model = new HashMap<String, Object>();
-		
-		transactionsManager.addAllTransactionsToModel(model);
+		Map<String,Object> model = transactionsManager.addTransactionsByAccountIdToModel(request);
 		
 		resultModelAndView.addAllObjects(model);
 		LOGGER.info("transactions was added to request");
