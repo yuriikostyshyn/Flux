@@ -28,9 +28,10 @@
 				<p style="margin-left:60px;">Account ${selectedAccount.accountId} state: ${selectedAccount.amount}</p>
 			</c:if>
 			<div>
-					<input type="button" value="Add new account" onclick="showPage('newAccount.do')" class="account-list-button"/>
+					<input type="button" value="Add new account" class="account-list-button" onclick="showPage('newAccount.do')"/>
 					<input type="submit" value="Get review" class="account-list-button" formaction="getAccountReview.do" />
 					<input type="submit" value="Show transactions" class="account-list-button" formaction="showTransactions.do"/>
+					<input type="submit" value="Create new transaction" class="account-list-button" formaction="newTransaction.do"/>
 			</div>
 		</form>
 <%@ include file="homepageBottom.jsp"%>
