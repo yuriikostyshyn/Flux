@@ -3,12 +3,6 @@ package com.flux.persistence.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.flux.persistence.entities.AccountEntity;
-
-
-import java.util.List;
-
-
 /**
  * The persistent class for the currency database table.
  * 

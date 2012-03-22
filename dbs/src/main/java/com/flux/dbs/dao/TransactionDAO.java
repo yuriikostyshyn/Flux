@@ -1,6 +1,5 @@
 package com.flux.dbs.dao;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import com.flux.domain.Transaction;

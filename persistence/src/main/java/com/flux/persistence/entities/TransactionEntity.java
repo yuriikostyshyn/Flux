@@ -5,7 +5,6 @@ import javax.persistence.*;
 
 import com.flux.persistence.entities.AccountEntity;
 
-import java.math.BigInteger;
 import java.util.Date;
 
 /**

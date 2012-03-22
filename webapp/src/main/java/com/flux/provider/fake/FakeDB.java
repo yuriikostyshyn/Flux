@@ -1,17 +1,14 @@
 package com.flux.provider.fake;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.flux.domain.Account;
 import com.flux.domain.Currency;
 import com.flux.domain.Transaction;
 import com.flux.domain.TransactionStatus;
 import com.flux.domain.User;
-import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 
 public class FakeDB {
 

@@ -1,7 +1,6 @@
 package com.flux.manager;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +21,6 @@ import com.flux.domain.User;
 import com.flux.provider.CurrencyProvider;
 import com.flux.provider.fake.AccountDataProviderImpl;
 import com.flux.provider.fake.AccountProviderImpl;
-import com.flux.web.util.exception.InvalidFormParametersException;
 import com.flux.web.util.helper.RequestHelper;
 
 public class AccountManagerTest {

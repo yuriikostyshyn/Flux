@@ -11,9 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.flux.dbs.dao.AccountDAO;
 import com.flux.domain.Account;
-import com.flux.domain.User;
 import com.flux.persistence.entities.AccountEntity;
-import com.flux.persistence.entities.UserEntity;
 
 @Component
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)

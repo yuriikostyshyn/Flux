@@ -3,7 +3,6 @@ package com.flux.persistence.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import java.util.List;
 
 /**
  * The persistent class for the status database table.

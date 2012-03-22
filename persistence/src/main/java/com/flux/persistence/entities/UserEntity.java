@@ -1,7 +1,6 @@
 package com.flux.persistence.entities;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 import javax.persistence.*;
 

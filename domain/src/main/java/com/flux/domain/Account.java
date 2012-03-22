@@ -1,6 +1,5 @@
 package com.flux.domain;
 
-import java.math.BigInteger;
 
 public class Account {
 	private User user;

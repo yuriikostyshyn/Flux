@@ -17,7 +17,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.flux.domain.Transaction;
 import com.flux.domain.TransactionStatus;
 import com.flux.persistence.entities.TransactionStatusEntity;
 

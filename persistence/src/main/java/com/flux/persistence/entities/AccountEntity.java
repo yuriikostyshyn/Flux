@@ -6,7 +6,6 @@ import javax.persistence.*;
 import com.flux.persistence.entities.CurrencyEntity;
 import com.flux.persistence.entities.UserEntity;
 
-import java.math.BigInteger;
 
 /**
  * The persistent class for the account database table.

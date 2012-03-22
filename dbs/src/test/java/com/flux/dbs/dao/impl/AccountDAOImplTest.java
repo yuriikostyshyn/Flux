@@ -18,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.flux.domain.Account;
-import com.flux.domain.User;
 import com.flux.persistence.entities.AccountEntity;
 
 public class AccountDAOImplTest {
