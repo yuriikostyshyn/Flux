@@ -2,6 +2,11 @@ package com.flux.web.util.exception;
 
 public class InvalidFormParametersException extends RuntimeException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public InvalidFormParametersException(String message) {
 		super(message);
 	}
