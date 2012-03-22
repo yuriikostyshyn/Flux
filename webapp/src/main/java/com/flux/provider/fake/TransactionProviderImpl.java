@@ -20,4 +20,9 @@ public class TransactionProviderImpl implements TransactionProvider{
 	public List<Transaction> getTransactionsByAccountId(long accountId) {
 		return FakeDB.getTransactionsByAccountId(accountId);
 	}
+
+	@Override
+	public void saveNewTransaction(Transaction mockTransaction) {
+		// TODO Auto-generated method stub		
+	}
 }
