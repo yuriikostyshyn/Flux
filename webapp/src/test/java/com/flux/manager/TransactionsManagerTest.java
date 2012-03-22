@@ -1,7 +1,6 @@
 package com.flux.manager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +31,14 @@ public class TransactionsManagerTest {
 	private RequestHelper mockRequestHelper;
 	@Mock
 	private List<Transaction> mockTransactions;
-	
+	@Mock
+	private Transaction mockNewTransaction;
+
 	private TransactionsManager underTest;
 	
 	private Map<String,Object> model;
 
+	
 	
 
 	@Before
@@ -69,5 +71,11 @@ public class TransactionsManagerTest {
 		List<Transaction> resultTransactions = (List<Transaction>) resultMap.get(TransactionsManager.TRANSACTIONS_ATTRIBUTE_NAME);
 		Assert.assertEquals(mockTransactions, resultTransactions);
 		
+	}
+	
+	@Test
+	public void shouldCallTransactionProviderToSaveNewTransaction(){
+		underTest.saveNewTransaction(mockNewTransaction);
+		Mockito.verify(mockTransactionProvider).saveNewTransaction(mockNewTransaction);
 	}
 }

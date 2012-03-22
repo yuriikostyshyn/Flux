@@ -1,5 +1,6 @@
 package com.flux.manager;
 
+import java.security.ProviderException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,15 @@ public class TransactionsManager {
 		return resultModel;
 	}
 
+	public void saveNewTransaction(Transaction newTransaction) {
+		try {
+			transactionProvider.saveNewTransaction(newTransaction);
+		} catch (ProviderException ex) {
+			LOGGER.error(ex.getMessage(), ex);
+
+		}
+	}
+
 	private List<Transaction> getTransactionsByAccountId(HttpServletRequest request) {
 		List<Transaction> resultTransactions = Collections.emptyList();
 		try {
@@ -63,4 +73,5 @@ public class TransactionsManager {
 	public void setRequestHelper(RequestHelper requestHelper) {
 		this.requestHelper = requestHelper;
 	}
+
 }
