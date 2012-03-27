@@ -24,9 +24,9 @@ public class FakeDB {
 	private static List<Currency> currencies;
 	static {
 		setUsers(formUsers());
+		setCurrencies(formCurrencies());
 		setTransactions(formTransactions());
 		setAccounts(formAccounts());
-		setCurrencies(formCurrencies());
 	}
 
 	private static List<User> formUsers() {
@@ -56,7 +56,7 @@ public class FakeDB {
 		accountTo.setAccountId(1);
 		accountTo.setAmount(12.11);
 		accountTo.setBankId(1);
-		accountTo.setCurrency(null);
+		accountTo.setCurrency(currencies.get(1));
 		Account accountFrom = accountTo;
 		transaction.setAccountTo(accountTo);
 		transaction.setAccountFrom(accountFrom);
@@ -82,7 +82,7 @@ public class FakeDB {
 		secondAccountTo.setAccountId(2);
 		secondAccountTo.setAmount(12.11);
 		secondAccountTo.setBankId(2);
-		secondAccountTo.setCurrency(null);
+		secondAccountTo.setCurrency(currencies.get(0));
 		Account secondAccountFrom = secondAccountTo;
 		secondTransaction.setAccountTo(secondAccountTo);
 		secondTransaction.setAccountFrom(secondAccountFrom);
@@ -94,7 +94,7 @@ public class FakeDB {
 		secondTransaction.setStartDate(secondStartDate);
 		secondTransaction.setEndDate(secondEndDate);
 		transactions.add(secondTransaction);
-		
+
 		Transaction thirdTransaction = new Transaction();
 		thirdTransaction.setTransactionId(3);
 
@@ -107,7 +107,7 @@ public class FakeDB {
 		thirdAccountTo.setAccountId(1);
 		thirdAccountTo.setAmount(12.11);
 		thirdAccountTo.setBankId(1);
-		thirdAccountTo.setCurrency(null);
+		thirdAccountTo.setCurrency(currencies.get(1));
 		Account thirdAccountFrom = accountTo;
 		thirdTransaction.setAccountTo(thirdAccountTo);
 		thirdTransaction.setAccountFrom(thirdAccountFrom);
@@ -133,7 +133,7 @@ public class FakeDB {
 		forthAccountTo.setAccountId(2);
 		forthAccountTo.setAmount(12.11);
 		forthAccountTo.setBankId(2);
-		forthAccountTo.setCurrency(null);
+		forthAccountTo.setCurrency(currencies.get(0));
 		Account forthAccountFrom = forthAccountTo;
 		forthTransaction.setAccountTo(forthAccountTo);
 		forthTransaction.setAccountFrom(forthAccountFrom);
@@ -252,7 +252,7 @@ public class FakeDB {
 
 	public static List<Transaction> getTransactionsByAccountId(long accountId) {
 		List<Transaction> resultTransactions = new ArrayList<Transaction>();
-		
+
 		for (Transaction transaction : transactions) {
 			Account accountFrom = transaction.getAccountFrom();
 			if (accountFrom.getAccountId() == accountId) {
