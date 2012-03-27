@@ -20,13 +20,18 @@
 </head>
 <body>
 	<div id="login_screen">
-		<p>Enter your login and password</p>
+		<p >Enter your login and password</p>
 		<form action="login.do" method="post">
-			<label> Login: </label> <input type="text" maxlength="40"
-				name="login" id="login" /> <br> <label> Password: </label> <input
-				id="password" type="password" maxlength="40" name="password" /> <br>
+			<p style="color: red; font-size: 15px;">${invalidDataError}</p>
+			<div>
+				<label> Login: </label> <input type="text" maxlength="40"
+					name="login" id="login" /> <br> <label> Password: </label> <input
+					id="password" type="password" maxlength="40" name="password" /> <br>
+			</div>
+			<div>
 			<a href="#">Forgot your password</a><input id="login_submit"
 				type="submit" name="Login" value='OK'>
+			</div>
 		</form>
 	</div>
 </body>
