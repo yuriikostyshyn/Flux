@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.flux.domain.User;
 import com.flux.provider.UserProvider;
@@ -18,6 +19,8 @@ public class LoginController {
 	private static final String REDIRECT_HOME_DO = "redirect:/home.do";
 	private static final String LOGIN_JSP = "login/login";
 	private static final String USER_PARAMETR = "user";
+	private static final String INVALID_DATA_ERROR_ATTRIBUTE_NAME = "invalidDataError";
+	private static final String INVALID_DATA_ERROR_MESSAGE = "Correct login and password is required";
 
 	private UserProvider userProvider;
 
@@ -30,16 +33,18 @@ public class LoginController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String login(String login, String password, HttpSession session) {
+	public ModelAndView login(String login, String password, HttpSession session) {
+		ModelAndView resultModelAndView = new ModelAndView(LOGIN_JSP);
 
-		String returnString = LOGIN_JSP;
 		User user = userProvider.getUserByLoginAndPassword(login, password);
 		if (user != null) {
 			session.setAttribute(USER_PARAMETR, user);
 			LOGGER.debug("User " + user + " loggined");
-			returnString = REDIRECT_HOME_DO;
+			resultModelAndView.setViewName(REDIRECT_HOME_DO);
+		} else {
+			resultModelAndView.addObject(INVALID_DATA_ERROR_ATTRIBUTE_NAME, INVALID_DATA_ERROR_MESSAGE);
 		}
-		return returnString;
+		return resultModelAndView;
 	}
 
 	@Autowired
