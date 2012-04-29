@@ -1,5 +1,8 @@
 package com.flux.domain;
 
+import com.flux.domain.utils.HashCodeUtil;
+
+import static com.flux.domain.utils.HashCodeUtil.hash;
 
 public class Account {
 	private User user;
@@ -40,7 +43,7 @@ public class Account {
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
 	}
-	
+
 	public double getAmount() {
 		return amount;
 	}
@@ -57,5 +60,28 @@ public class Account {
 		this.securityKey = securityKey;
 	}
 
-	
+	public boolean equals(Object instanceToCompare) {
+		boolean result = false;
+
+		if (instanceToCompare != null) {
+			if (instanceToCompare.getClass().equals(getClass())) {
+				if (instanceToCompare == this) {
+					result = true;
+				} else if (instanceToCompare.hashCode() == hashCode()) {
+
+					Account accountToCompare = (Account) instanceToCompare;
+
+					if (accountToCompare.getAccountId() == getAccountId()) {
+						result = true;
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	public int hashCode() {
+		return hash(HashCodeUtil.SEED, getAccountId());
+
+	}
 }

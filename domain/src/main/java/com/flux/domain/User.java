@@ -1,5 +1,9 @@
 package com.flux.domain;
 
+import com.flux.domain.utils.HashCodeUtil;
+
+import static com.flux.domain.utils.HashCodeUtil.hash;
+
 public class User {
 	private int userId;
 	private String login;
@@ -54,5 +58,30 @@ public class User {
 
 	public void setSecurityKey(String securityKey) {
 		this.securityKey = securityKey;
+	}
+
+	public boolean equals(Object instanceToCompare) {
+		boolean result = false;
+
+		if (instanceToCompare != null) {
+			if (instanceToCompare.getClass().equals(getClass())) {
+				if (instanceToCompare == this) {
+					result = true;
+				} else if (instanceToCompare.hashCode() == hashCode()) {
+
+					User userToCompare = (User) instanceToCompare;
+
+					if (userToCompare.getUserId() == getUserId()) {
+						result = true;
+					}
+				}
+			}
+		}
+		return result;
+
+	}
+
+	public int hashCode() {
+		return hash(HashCodeUtil.SEED, getUserId());
 	}
 }
