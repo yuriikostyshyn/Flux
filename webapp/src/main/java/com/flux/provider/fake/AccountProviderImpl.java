@@ -17,9 +17,7 @@ public class AccountProviderImpl implements AccountProvider{
 	}
 
 	@Override
-	public void saveNewAccount(Account account) {
-		// TODO Auto-generated method stub
-		
+	public void saveNewAccount(Account account) {	
 	}
 
 }

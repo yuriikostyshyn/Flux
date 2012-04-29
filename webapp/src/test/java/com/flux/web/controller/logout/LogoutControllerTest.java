@@ -1,7 +1,6 @@
 package com.flux.web.controller.logout;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
@@ -16,8 +15,6 @@ public class LogoutControllerTest {
 	@Mock
 	private HttpServletRequest mockRequest;
 	@Mock
-	private HttpServletResponse mockResponse;
-	@Mock
 	private HttpSession mockSession;
 
 	private LogoutController underTest;
@@ -31,14 +28,13 @@ public class LogoutControllerTest {
 
 	@Test
 	public void shouldReturnLoginPagePathString() {
-		String actualReturnedPath = underTest.provideLogout(mockRequest,
-				mockResponse);
-		Assert.assertEquals(LogoutController.LOGIN_PAGE_PATH, actualReturnedPath);
+		String actualPath = underTest.provideLogout(mockSession);
+		Assert.assertEquals(LogoutController.REDIRECT_LOGIN_PATH, actualPath);
 	}
 
 	@Test
 	public void shouldCloseSession() {
-		underTest.provideLogout(mockRequest, mockResponse);
+		underTest.provideLogout(mockSession);
 		Mockito.verify(mockSession,Mockito.times(1)).invalidate();
 	}
 }

@@ -8,10 +8,6 @@ public class InvalidUserException extends RuntimeException {
 		super(message);
 	}
 	
-	public InvalidUserException(Throwable throwable){
-		super(throwable);
-	}
-	
 	public InvalidUserException(String message, Throwable throwable){
 		super(message, throwable);
 	}

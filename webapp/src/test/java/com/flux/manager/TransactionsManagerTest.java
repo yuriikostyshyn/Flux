@@ -5,30 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.ui.ModelMap;
 
 import com.flux.domain.Transaction;
 import com.flux.provider.TransactionProvider;
-import com.flux.web.util.helper.RequestHelper;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class TransactionsManagerTest {
 	
-	private static final long ACCOUNT_ID = 1L;
+	private static final long SELECTED_ACCOUNT_ID = 1L;
 	
 	@Mock
-	private HttpServletRequest mockRequest;
-	@Mock
 	private TransactionProvider mockTransactionProvider;
-	@Mock
-	private RequestHelper mockRequestHelper;
 	@Mock
 	private List<Transaction> mockTransactions;
 	@Mock
@@ -48,34 +43,37 @@ public class TransactionsManagerTest {
 		
 		MockitoAnnotations.initMocks(this);
 		underTest.setTransactionProvider(mockTransactionProvider);
-		underTest.setRequestHelper(mockRequestHelper);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldAddAllTransactionsToModel(){
 		List<Transaction> transactions = new ArrayList<Transaction>();
-		Mockito.when(mockTransactionProvider.getAllTransactions()).thenReturn(transactions);
+		when(mockTransactionProvider.getAllTransactions()).thenReturn(transactions);
+		
 		underTest.addAllTransactionsToModel(model);
-		List<Transaction> resultTransactions = (List<Transaction>)model.get(TransactionsManager.TRANSACTIONS_ATTRIBUTE_NAME); 
-		Assert.assertEquals(transactions, resultTransactions);
+		List<Transaction> result = (List<Transaction>)model.get(TransactionsManager.TRANSACTIONS_ATTRIBUTE_NAME); 
+		
+		assertEquals(transactions, result);
 		
 	}	
 	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldAddTransactionsToModelIfAccountIdIsCorrect(){
-		Mockito.when(mockRequestHelper.getSelectedAccountId(mockRequest)).thenReturn(ACCOUNT_ID);
-		Mockito.when(mockTransactionProvider.getTransactionsByAccountId(ACCOUNT_ID)).thenReturn(mockTransactions);
-		Map<String, Object> resultMap = underTest.addTransactionsByAccountIdToModel(mockRequest);
-		List<Transaction> resultTransactions = (List<Transaction>) resultMap.get(TransactionsManager.TRANSACTIONS_ATTRIBUTE_NAME);
-		Assert.assertEquals(mockTransactions, resultTransactions);
+		when(mockTransactionProvider.getTransactionsByAccountId(SELECTED_ACCOUNT_ID)).thenReturn(mockTransactions);
+		
+		ModelMap actualMap = underTest.addTransactionsByAccountIdToModel(SELECTED_ACCOUNT_ID);
+		List<Transaction> actualTransactions = (List<Transaction>) actualMap.get(TransactionsManager.TRANSACTIONS_ATTRIBUTE_NAME);
+		
+		assertEquals(mockTransactions, actualTransactions);
 		
 	}
 	
 	@Test
 	public void shouldCallTransactionProviderToSaveNewTransaction(){
 		underTest.saveNewTransaction(mockNewTransaction);
-		Mockito.verify(mockTransactionProvider).saveNewTransaction(mockNewTransaction);
+		
+		verify(mockTransactionProvider).saveNewTransaction(mockNewTransaction);
 	}
 }

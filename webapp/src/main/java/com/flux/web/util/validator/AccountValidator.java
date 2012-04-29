@@ -7,12 +7,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
 
 import com.flux.domain.Account;
 
 @Component
-public class AccountValidator implements Validator {
+public class AccountValidator {
 
 	public static final String ACCOUNT_ID_FORM_FIELD_NAME = "accountId";
 	public static final String NONMATCH_ACCOUNT_ID_PROPERTY_NAME = "nonmatch.accountId";
@@ -30,13 +29,6 @@ public class AccountValidator implements Validator {
 		incorrectFields = new ArrayList<String>();
 	}
 
-	@Override
-	public boolean supports(Class<?> classParameter) {
-
-		return Account.class.isAssignableFrom(classParameter);
-	}
-
-	@Override
 	public void validate(Object target, Errors errors) {
 		formIncorrectFieldsList(errors);
 
@@ -59,7 +51,8 @@ public class AccountValidator implements Validator {
 	private void validateBankId(Errors errors, Account targetAccount) {
 		if (doesFieldErrorExist(BANK_ID_FORM_FIELD_NAME)) {
 			if (targetAccount.getBankId() <= 0) {
-				errors.rejectValue(BANK_ID_FORM_FIELD_NAME, NONMATCH_BANK_ID_PROPERTY_NAME);
+				errors.rejectValue(BANK_ID_FORM_FIELD_NAME,
+						NONMATCH_BANK_ID_PROPERTY_NAME);
 			}
 		}
 	}
@@ -67,19 +60,22 @@ public class AccountValidator implements Validator {
 	private void validateAccountId(Errors errors, Account targetAccount) {
 		if (doesFieldErrorExist(ACCOUNT_ID_FORM_FIELD_NAME)) {
 			if (targetAccount.getAccountId() <= 0) {
-				errors.rejectValue(ACCOUNT_ID_FORM_FIELD_NAME, NONMATCH_ACCOUNT_ID_PROPERTY_NAME);
+				errors.rejectValue(ACCOUNT_ID_FORM_FIELD_NAME,
+						NONMATCH_ACCOUNT_ID_PROPERTY_NAME);
 			}
 		}
 	}
 
 	private void validateSecurityKey(Errors errors, Account targetAccount) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, SECURITY_KEY_FORM_FIELD_NAME,
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors,
+				SECURITY_KEY_FORM_FIELD_NAME,
 				SECURITY_KEY_REQUIRED_PROPERTY_NAME);
 
 		String targetAccountSecurityKey = targetAccount.getSecurityKey();
 		int securityKeyLength = targetAccountSecurityKey.length();
 		if (securityKeyLength != SECURITY_KEY_REQUIRED_LENGTH) {
-			errors.rejectValue(SECURITY_KEY_FORM_FIELD_NAME, SECURITY_KEY_SIZE_MISMATCH_PROPERTY_NAME);
+			errors.rejectValue(SECURITY_KEY_FORM_FIELD_NAME,
+					SECURITY_KEY_SIZE_MISMATCH_PROPERTY_NAME);
 		}
 	}
 

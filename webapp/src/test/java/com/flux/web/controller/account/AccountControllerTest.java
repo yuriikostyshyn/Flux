@@ -3,8 +3,7 @@ package com.flux.web.controller.account;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import junit.framework.Assert;
 
@@ -21,19 +20,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.flux.domain.Account;
 import com.flux.domain.Currency;
-import com.flux.manager.AccountManager;
+import com.flux.manager.AccountsManager;
 import com.flux.web.util.propertyeditor.CurrencyPropertyEditor;
 import com.flux.web.util.validator.AccountValidator;
 
 public class AccountControllerTest {
 
-	public static final String MAP_DUMMY_ELEMENT = "mapDummyElement";
+	private static final long SELECTED_ACCOUNT_ID = 1L;
+	private static final String MAP_DUMMY_ELEMENT = "mapDummyElement";
+	
 	@Mock
-	private HttpServletRequest mockRequest;
-	@Mock
-	private HttpServletResponse mockResponse;
-	@Mock
-	private AccountManager mockAccountManager;
+	private AccountsManager mockAccountManager;
 	@Mock
 	private ModelMap mockModel;
 	@Mock
@@ -48,14 +45,16 @@ public class AccountControllerTest {
 	private SessionStatus mockSessionStatus;
 	@Mock
 	private AccountValidator mockAccountValidator;
+	@Mock
+	private HttpSession mockSession;
 
 	private AccountController underTest;
-	private Map<String, Object> model;
+	private ModelMap modelMap;
 
 	@Before
 	public void setUp() {
 		underTest = new AccountController();
-		model = new HashMap<String, Object>();
+		modelMap = new ModelMap();
 
 		MockitoAnnotations.initMocks(this);
 
@@ -66,33 +65,36 @@ public class AccountControllerTest {
 
 	@Test
 	public void shouldReturnViewWithLinkToAccountsListPage() {
-		ModelAndView resultModelAndView = underTest.showAccountsByUserId(mockRequest, mockResponse, mockModel);
-		String resultPagePath = resultModelAndView.getViewName();
-		Assert.assertEquals(AccountController.ACCOUNTS_VIEW_PAGE_PATH, resultPagePath);
+		String expectedPath = AccountController.ACCOUNTS_VIEW_PAGE_PATH;
+		
+		String actualPath =  underTest.showAccountsByUserId(mockSession, mockModel);
+			
+		Assert.assertEquals(expectedPath, actualPath);
 	}
 
 	@Test
 	public void shouldCallAddAccountsByUserIdMethodOfAccountsManagerInstance() {
-		underTest.showAccountsByUserId(mockRequest, mockResponse, mockModel);
-		Mockito.verify(mockAccountManager, Mockito.times(1)).addAccountsToResult(mockRequest);
+		underTest.showAccountsByUserId(mockSession, mockModel);
+		Mockito.verify(mockAccountManager, Mockito.times(1)).addAccountsToSession(mockSession);
 	}
 
 	@Test
 	public void shouldCallAddAccountReviewByAccountIdMethodOfAccountsManagerInstance() {
-		underTest.showAccountReviewByAccountId(mockRequest, mockResponse);
-		Mockito.verify(mockAccountManager, Mockito.times(1)).addAccountReviewByAccountIdToModel(mockRequest);
+		underTest.showAccountReviewByAccountId(SELECTED_ACCOUNT_ID);
+		Mockito.verify(mockAccountManager, Mockito.times(1)).addAccountReviewByAccountIdToModel(SELECTED_ACCOUNT_ID);
 	}
 
 	@Test
 	public void shouldAddModelReturnedByAccountsManagerInstanceToResult() {
-		model.put(MAP_DUMMY_ELEMENT, MAP_DUMMY_ELEMENT);
-		Mockito.when(mockAccountManager.addAccountReviewByAccountIdToModel(mockRequest)).thenReturn(model);
-		ModelAndView resultModelAndView = underTest.showAccountReviewByAccountId(mockRequest, mockResponse);
+		modelMap.put(MAP_DUMMY_ELEMENT, MAP_DUMMY_ELEMENT);
+		Mockito.when(mockAccountManager.addAccountReviewByAccountIdToModel(SELECTED_ACCOUNT_ID)).thenReturn(modelMap);
+		ModelAndView actualModelAndView = underTest.showAccountReviewByAccountId(SELECTED_ACCOUNT_ID);
 
-		Map<String, Object> resultModel = resultModelAndView.getModel();
-		Assert.assertTrue(resultModel.containsKey(MAP_DUMMY_ELEMENT));
-		String resultMapDummyElement = (String) resultModelAndView.getModel().get(MAP_DUMMY_ELEMENT);
-		Assert.assertEquals(MAP_DUMMY_ELEMENT, resultMapDummyElement);
+		Map<String, Object> actualModel = actualModelAndView.getModel();
+		Assert.assertTrue(actualModel.containsKey(MAP_DUMMY_ELEMENT));
+		
+		String actualMapDummyElement = (String) actualModel.get(MAP_DUMMY_ELEMENT);
+		Assert.assertEquals(MAP_DUMMY_ELEMENT, actualMapDummyElement);
 	}
 
 	@Test
@@ -119,9 +121,11 @@ public class AccountControllerTest {
 
 	@Test
 	public void shouldReturnRedirectToAccountsServletIfNewAccountInstanceIsCorrect() {
-		Mockito.when(mockBindingResult.hasErrors()).thenReturn(false);
+		Mockito.when(mockBindingResult.hasErrors()).thenReturn(false);		
 		String expectedPath = AccountController.REDIRECT_PATH_PART + AccountController.SHOW_ACCOUNTS_SERVLET_PATH;
-		String actualPath = underTest.addNewAccount(mockNewAccount, mockBindingResult, mockSessionStatus);
+		
+		String actualPath =  underTest.addNewAccount(mockNewAccount, mockBindingResult, mockSessionStatus);
+		
 		Assert.assertEquals(expectedPath, actualPath);
 	}
 	
@@ -129,7 +133,9 @@ public class AccountControllerTest {
 	public void shouldReturnNewAccountPagePathIfNewAccountInstanceIsIncorrect() {
 		Mockito.when(mockBindingResult.hasErrors()).thenReturn(true);
 		String expectedPath = AccountController.NEW_ACCOUNT_PAGE_PATH;
+		
 		String actualPath = underTest.addNewAccount(mockNewAccount, mockBindingResult, mockSessionStatus);
+		
 		Assert.assertEquals(expectedPath, actualPath);
 	}
 	

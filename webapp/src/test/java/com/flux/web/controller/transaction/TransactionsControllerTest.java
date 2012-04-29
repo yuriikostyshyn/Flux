@@ -1,11 +1,7 @@
 package com.flux.web.controller.transaction;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import junit.framework.Assert;
 
@@ -24,13 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.flux.domain.Account;
 import com.flux.domain.Transaction;
-import com.flux.manager.AccountManager;
+import com.flux.manager.AccountsManager;
 import com.flux.manager.TransactionsManager;
 import com.flux.web.controller.account.AccountController;
 import com.flux.web.util.propertyeditor.AccountPropertyEditor;
 import com.flux.web.util.validator.TransactionValidator;
 
-public class TransactionListControllerTest {
+public class TransactionsControllerTest {
 
 	private static final long MOCK_SELECTED_ACCOUNT_ID=1L;
 	
@@ -42,10 +38,6 @@ public class TransactionListControllerTest {
 	private TransactionValidator mockTransactionValidator;
 	@Mock
 	private AccountPropertyEditor mockAccountEditor;
-	@Mock
-	private HttpServletRequest mockRequest;
-	@Mock
-	private HttpServletResponse mockResponse;
 	@Mock
 	private Transaction mockTransaction;
 	@Mock
@@ -62,11 +54,11 @@ public class TransactionListControllerTest {
 	private List<Account> mockAccounts;
 	
 	
-	private TransactionListController underTest;
+	private TransactionsController underTest;
 
 	@Before
 	public void setUp() {
-		underTest = new TransactionListController();
+		underTest = new TransactionsController();
 		
 		MockitoAnnotations.initMocks(this);
 		
@@ -77,19 +69,19 @@ public class TransactionListControllerTest {
 
 	@Test
 	public void shouldRedirectToTransactionsListPage() {
-		ModelAndView resultModelAndView = underTest.showTransactionsByAccountId(mockRequest, mockResponse);
-		Assert.assertEquals(TransactionListController.HOMEPAGE_PATH, resultModelAndView.getViewName());
+		ModelAndView actualModelAndView = underTest.showTransactionsByAccountId(MOCK_SELECTED_ACCOUNT_ID);
+		Assert.assertEquals(TransactionsController.HOMEPAGE_PATH, actualModelAndView.getViewName());
 	}
 
 	@Test
 	public void shouldAddTransactionsAttributeToResultModelAndView() {
-		Map<String, Object> model = new HashMap<String, Object>();
+		ModelMap model = new ModelMap();
 		model.put(DUMMY_ELEMENT_NAME, DUMMY_ELEMENT);
 		
-		Mockito.when(mockTransactionsManager.addTransactionsByAccountIdToModel(mockRequest)).thenReturn(model);
+		Mockito.when(mockTransactionsManager.addTransactionsByAccountIdToModel(MOCK_SELECTED_ACCOUNT_ID)).thenReturn(model);
 		
-		ModelAndView resultModelAndView = underTest.showTransactionsByAccountId(mockRequest, mockResponse);
-		Map<String,Object> resultModel = resultModelAndView.getModel();
+		ModelAndView actualModelAndView = underTest.showTransactionsByAccountId(MOCK_SELECTED_ACCOUNT_ID);
+		Map<String,Object> resultModel = actualModelAndView.getModel();
 		
 		Assert.assertTrue(resultModel.containsKey(DUMMY_ELEMENT_NAME));
 		
@@ -118,15 +110,17 @@ public class TransactionListControllerTest {
 	
 	@Test
 	public void shouldInitFormWithNewTransactionInstance(){
-		ModelAndView resultModelAndView = underTest.initNewTransactionForm(MOCK_SELECTED_ACCOUNT_ID, mockModel);
-		String resultPath = resultModelAndView.getViewName();
-		Assert.assertEquals(TransactionListController.NEW_TRANSACTION_PAGE_PATH, resultPath);
+		String expectedPath = TransactionsController.NEW_TRANSACTION_PAGE_PATH;
+		
+		String actualPath = underTest.initNewTransactionForm(MOCK_SELECTED_ACCOUNT_ID, mockModel);
+		
+		Assert.assertEquals(expectedPath, actualPath);
 	}	
 	
 	
 	@Test
 	public void shouldInitAccountsFieldInAccountEditors(){
-		Mockito.when(mockWebRequest.getAttribute(AccountManager.ACCOUNTS_ATTRIBUTE_NAME, RequestAttributes.SCOPE_SESSION)).thenReturn(mockAccounts);
+		Mockito.when(mockWebRequest.getAttribute(AccountsManager.ACCOUNTS_ATTRIBUTE_NAME, RequestAttributes.SCOPE_SESSION)).thenReturn(mockAccounts);
 		
 		underTest.initBinder(mockDataBinder, mockWebRequest);
 		Mockito.verify(mockAccountEditor).setAccounts(mockAccounts);
@@ -134,7 +128,7 @@ public class TransactionListControllerTest {
 	
 	@Test
 	public void shouldRegisterAccountEditor(){
-		Mockito.when(mockWebRequest.getAttribute(AccountManager.ACCOUNTS_ATTRIBUTE_NAME, RequestAttributes.SCOPE_SESSION)).thenReturn(mockAccounts);
+		Mockito.when(mockWebRequest.getAttribute(AccountsManager.ACCOUNTS_ATTRIBUTE_NAME, RequestAttributes.SCOPE_SESSION)).thenReturn(mockAccounts);
 		
 		underTest.initBinder(mockDataBinder, mockWebRequest);	
 		

@@ -33,16 +33,16 @@ public class AccountPropertyEditor extends PropertyEditorSupport {
 	}
 
 	public void setAccounts(List<Account> accounts) {
-		Map<Long, Account> resultAccounts = new HashMap<Long, Account>();
+		Map<Long, Account> result = new HashMap<Long, Account>();
 
 		ListIterator<Account> accountsIterator = accounts.listIterator();
 
 		while (accountsIterator.hasNext()) {
 			Account currentAccount = accountsIterator.next();
 
-			resultAccounts.put(currentAccount.getAccountId(), currentAccount);
+			result.put(currentAccount.getAccountId(), currentAccount);
 		}
-		this.accounts = resultAccounts;
+		this.accounts = result;
 	}
 
 }
