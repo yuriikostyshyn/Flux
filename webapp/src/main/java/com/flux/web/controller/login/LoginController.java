@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.flux.domain.User;
@@ -33,7 +34,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView login(String login, String password, HttpSession session) {
+	public ModelAndView login(@RequestParam String login,@RequestParam String password, HttpSession session) {
 		ModelAndView resultModelAndView = new ModelAndView(LOGIN_JSP);
 
 		User user = userProvider.getUserByLoginAndPassword(login, password);

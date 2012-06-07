@@ -23,6 +23,5 @@ public class TransactionProviderImpl implements TransactionProvider{
 
 	@Override
 	public void saveNewTransaction(Transaction mockTransaction) {
-		// TODO Auto-generated method stub		
 	}
 }

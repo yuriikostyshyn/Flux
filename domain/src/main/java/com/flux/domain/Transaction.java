@@ -1,6 +1,9 @@
 package com.flux.domain;
 
 import java.util.Date;
+import com.flux.domain.utils.HashCodeUtil;
+
+import static com.flux.domain.utils.HashCodeUtil.hash;
 
 public class Transaction {
 	private long transactionId;
@@ -65,5 +68,31 @@ public class Transaction {
 
 	public void setStatus(TransactionStatus status) {
 		this.status = status;
+	}
+
+	public boolean equals(Object instanceToCompare) {
+		boolean result = false;
+
+		if (instanceToCompare != null) {
+			if (instanceToCompare.getClass().equals(getClass())) {
+				if (instanceToCompare == this) {
+					result = true;
+				} else if (instanceToCompare.hashCode() == hashCode()) {
+
+					Transaction transactionToCompare = (Transaction) instanceToCompare;
+
+					if (transactionToCompare.getTransactionId() == getTransactionId()) {
+						result = true;
+					}
+				}
+			}
+		}
+
+		return result;
+
+	}
+
+	public int hashCode() {
+		return hash(HashCodeUtil.SEED, getTransactionId());
 	}
 }

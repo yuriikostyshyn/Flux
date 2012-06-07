@@ -1,10 +1,6 @@
 package com.flux.web.controller.transaction;
 
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +20,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.flux.domain.Account;
 import com.flux.domain.Transaction;
-import com.flux.manager.AccountManager;
+import com.flux.manager.AccountsManager;
 import com.flux.manager.TransactionsManager;
 import com.flux.web.controller.account.AccountController;
 import com.flux.web.util.propertyeditor.AccountPropertyEditor;
 import com.flux.web.util.validator.TransactionValidator;
 
 @Controller
-public class TransactionListController {
+public class TransactionsController {
 
 	public static final String SHOW_TRANSACTIONS_SERVLET_PATH = "/showTransactions.do";
 	public static final String ADD_NEW_TRANSACTION_SERVLET_PATH = "/newTransaction.do";
@@ -43,45 +39,45 @@ public class TransactionListController {
 	public static final String TRANSACTIONS_ATTRIBUTE_NAME = "transactions";
 	public static final String NEW_TRANSACTION_ATTRIBUTE_NAME = "newTransaction";
 
-	private static final Logger LOGGER = Logger.getLogger(TransactionListController.class);
+	private static final Logger LOGGER = Logger.getLogger(TransactionsController.class);
 
 	private TransactionsManager transactionsManager;
 	private TransactionValidator transactionValidator;
 	private AccountPropertyEditor accountEditor;
 
 	@RequestMapping(value = SHOW_TRANSACTIONS_SERVLET_PATH, method = RequestMethod.GET)
-	public ModelAndView showTransactionsByAccountId(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView resultModelAndView = new ModelAndView(HOMEPAGE_PATH);
+	public ModelAndView showTransactionsByAccountId(@RequestParam long selectedAccountId) {
+		ModelAndView result = new ModelAndView(HOMEPAGE_PATH);
 
-		Map<String, Object> model = transactionsManager.addTransactionsByAccountIdToModel(request);
+		ModelMap model = transactionsManager.addTransactionsByAccountIdToModel(selectedAccountId);
 
-		resultModelAndView.addAllObjects(model);
+		result.addAllObjects(model);
 		LOGGER.info("transactions was added to request");
 
-		return resultModelAndView;
+		return result;
 	}
 
 	@RequestMapping(value = ADD_NEW_TRANSACTION_SERVLET_PATH, method = RequestMethod.GET)
-	public ModelAndView initNewTransactionForm(@RequestParam Long selectedAccountId, ModelMap model) {
+	public String initNewTransactionForm(@RequestParam Long selectedAccountId, ModelMap model) {
 
-		ModelAndView resultModelAndView = new ModelAndView(NEW_TRANSACTION_PAGE_PATH);	
+		String result = NEW_TRANSACTION_PAGE_PATH;	
 		
 		initNewTransactionAttributeInModel(model, selectedAccountId);
 
-		return resultModelAndView;
+		return result;
 	}
 
 	@RequestMapping(value = ADD_NEW_TRANSACTION_SERVLET_PATH, method = RequestMethod.POST)
 	public String addNewTransaction(@ModelAttribute(NEW_TRANSACTION_ATTRIBUTE_NAME) Transaction transaction, BindingResult bindingResult, SessionStatus sessionStatus) {
-		String resultPath = NEW_TRANSACTION_PAGE_PATH;
+		String result = NEW_TRANSACTION_PAGE_PATH;
 		transactionValidator.validate(transaction, bindingResult);
 
 		if (!bindingResult.hasErrors()) {
 			transactionsManager.saveNewTransaction(transaction);
-			resultPath = AccountController.ACCOUNTS_VIEW_PAGE_PATH;
+			result = AccountController.ACCOUNTS_VIEW_PAGE_PATH;
 		}
 
-		return resultPath;
+		return result;
 	}
 
 	@InitBinder
@@ -111,7 +107,7 @@ public class TransactionListController {
 
 	@SuppressWarnings("unchecked")
 	private void initAccountsFieldInAccountEditor(WebRequest webRequest) {
-		List<Account> accounts = (List<Account>) webRequest.getAttribute(AccountManager.ACCOUNTS_ATTRIBUTE_NAME,
+		List<Account> accounts = (List<Account>) webRequest.getAttribute(AccountsManager.ACCOUNTS_ATTRIBUTE_NAME,
 				RequestAttributes.SCOPE_SESSION);
 		accountEditor.setAccounts(accounts);
 	}

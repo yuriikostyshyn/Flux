@@ -18,7 +18,6 @@ public class LoginFilter implements Filter {
 
 	private static final String USER_ATTRIBUTE_NAME = "user";
 	private static final String FLUX_LOGIN_DO = "/flux/login.do";
-	private static final String LOGIN_DO = "login.do";
 	private static final Logger LOGGER = Logger.getLogger(LoginFilter.class);
 
 	public void destroy() {
@@ -30,14 +29,15 @@ public class LoginFilter implements Filter {
 		final HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		final HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		final HttpSession httpSession = httpServletRequest.getSession();
-		final String servletPath = httpServletRequest.getServletPath();
-		final boolean isLoginUri = servletPath.endsWith(
-				LOGIN_DO);
-		final boolean isLoginedUser = httpSession.getAttribute(USER_ATTRIBUTE_NAME) != null;
+		final String requestURI = httpServletRequest.getRequestURI();
+		final boolean isLoginUri = requestURI.endsWith(FLUX_LOGIN_DO);
+		final boolean isLoginedUser = httpSession
+				.getAttribute(USER_ATTRIBUTE_NAME) != null;
 		LOGGER.debug("URI:" + httpServletRequest.getRequestURI());
-		if (isLoginUri && isLoginedUser) {
-			httpServletResponse.sendRedirect(servletPath);
-		} else if (!isLoginUri && !isLoginedUser) {
+
+		if (isLoginUri) {
+			chain.doFilter(request, response);
+		} else if (!isLoginedUser) {
 			httpServletResponse.sendRedirect(FLUX_LOGIN_DO);
 		} else {
 			chain.doFilter(request, response);
@@ -45,6 +45,6 @@ public class LoginFilter implements Filter {
 	}
 
 	public void init(FilterConfig arg0) throws ServletException {
-}
+	}
 
 }

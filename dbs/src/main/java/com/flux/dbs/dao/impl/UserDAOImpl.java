@@ -18,6 +18,7 @@ public class UserDAOImpl extends UserDAO {
 
 	public static final String GET_USER_BY_LOGIN_PASSWORD_QUERY_NAME = "userByLoginPass";
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public User getUserByLoginAndPassword(String login, String password) {
 		User resultUser = new User();

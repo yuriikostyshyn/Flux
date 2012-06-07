@@ -16,6 +16,7 @@ public class TransactionDAOImpl extends TransactionDAO {
 
 	public static final String GET_TRANSACTIONS_BY_ACCOUNT_TO_ID_QUERY_NAME = "getTransactionsByAccountToId";
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Transaction> getTransactionsByAccountToId(Long accountId) {
 		List<Transaction> resultTransactions = new ArrayList<Transaction>();
