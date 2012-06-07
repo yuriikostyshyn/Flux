@@ -21,10 +21,8 @@ public class AccountEntity implements Serializable {
 
 	private Long bankId;
 
-	// bi-directional many-to-one association to Currency
 	private CurrencyEntity currency;
 
-	// bi-directional many-to-one association to User
 	private UserEntity user;
 
 	private Double amount;

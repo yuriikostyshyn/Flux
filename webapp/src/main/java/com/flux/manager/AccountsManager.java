@@ -2,16 +2,15 @@ package com.flux.manager;
 
 import java.security.ProviderException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.ModelMap;
 
 import com.flux.domain.Account;
 import com.flux.domain.Currency;
@@ -20,32 +19,28 @@ import com.flux.provider.AccountDataProvider;
 import com.flux.provider.AccountProvider;
 import com.flux.provider.CurrencyProvider;
 import com.flux.web.util.exception.InvalidUserException;
-import com.flux.web.util.helper.RequestHelper;
 
 @Component
-public class AccountManager {
+public class AccountsManager {
 
 	public static final String SELECTED_ACCOUNT_ATTRIBUTE_NAME = "selectedAccount";
 	public static final String ACCOUNTS_ATTRIBUTE_NAME = "accounts";
 	public static final String USER_ATTRIBUTE_NAME = "user";
-	private static final Logger LOGGER = Logger.getLogger(UserManager.class);
+	private static final Logger LOGGER = Logger.getLogger(AccountsManager.class);
 
 	private AccountProvider accountProvider;
 	private AccountDataProvider accountDataProvider;
 	private CurrencyProvider currencyProvider;
-	private RequestHelper requestHelper;
-
-	public void addAccountsToResult(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		addAccountsToSession(session);
+	
+	public void addAccountsToSession(HttpSession session) {
+		List<Account> accounts = getAccounts(session);
+		session.setAttribute(ACCOUNTS_ATTRIBUTE_NAME, accounts);
 	}
 
-	public Map<String, Object> addAccountReviewByAccountIdToModel(HttpServletRequest request) {
-		Map<String, Object> resultModel = new HashMap<String, Object>();
-
-		addAccountByIdToModel(request, resultModel);
-
-		return resultModel;
+	public ModelMap addAccountReviewByAccountIdToModel(long selectedAccountId) {
+		ModelMap result = addAccountByIdToModel(selectedAccountId);
+		
+		return result;
 	}
 
 	public void saveNewAccount(Account newAccount) {
@@ -60,11 +55,6 @@ public class AccountManager {
 		Map<String, Currency> resultCurrencies = currencyProvider.getAllCurrenciesMap();
 
 		return resultCurrencies;
-	}
-
-	private void addAccountsToSession(HttpSession session) {
-		List<Account> accounts = getAccounts(session);
-		session.setAttribute(ACCOUNTS_ATTRIBUTE_NAME, accounts);
 	}
 
 	private List<Account> getAccounts(HttpSession session) {
@@ -98,21 +88,19 @@ public class AccountManager {
 		return resultAccounts;
 	}
 
-	private void addAccountByIdToModel(HttpServletRequest request, Map<String, Object> resultModel) {
-		Account selectedAccount = getAccountById(request);
-		resultModel.put(SELECTED_ACCOUNT_ATTRIBUTE_NAME, selectedAccount);
+	private ModelMap addAccountByIdToModel(long selectedAccountId) {
+		ModelMap result = new ModelMap();
+		
+		Account selectedAccount = getAccountById(selectedAccountId);
+		result.put(SELECTED_ACCOUNT_ATTRIBUTE_NAME, selectedAccount);
+		
+		return result;
 	}
 
-	private Account getAccountById(HttpServletRequest request) {
-		Account resultSelectedAccount = new Account();
-		try {
-			long selectedAccountId = requestHelper.getSelectedAccountId(request);
-
-			resultSelectedAccount = accountDataProvider.getAccountById(selectedAccountId);
-		} catch (NumberFormatException ex) {
-			LOGGER.error("Incorrect type of selected account id parameter", ex);
-		}
-		return resultSelectedAccount;
+	private Account getAccountById(long selectedAccountId) {		
+		Account	result = accountDataProvider.getAccountById(selectedAccountId); 
+			
+		return result;
 	}
 
 	@Autowired
@@ -130,9 +118,4 @@ public class AccountManager {
 		this.currencyProvider = currencyProvider;
 	}
 	
-	@Autowired
-	public void setRequestHelper(RequestHelper requestHelper) {
-		this.requestHelper = requestHelper;
-	}
-
 }

@@ -2,8 +2,7 @@ package com.flux.web.controller.account;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +13,13 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.flux.domain.Account;
 import com.flux.domain.Currency;
-import com.flux.manager.AccountManager;
+import com.flux.manager.AccountsManager;
 import com.flux.web.util.propertyeditor.CurrencyPropertyEditor;
 import com.flux.web.util.validator.AccountValidator;
 
@@ -42,24 +42,28 @@ public class AccountController {
 
 	public static final String NEW_ACCOUNT_PAGE_PATH = "homepage/newAccountPage";
 
-	private AccountManager accountManager;
+	private AccountsManager accountsManager;
 	private CurrencyPropertyEditor currencyEditor;
 	private AccountValidator accountValidator;
 
 	@RequestMapping(value = SHOW_ACCOUNTS_SERVLET_PATH, method = RequestMethod.GET)
-	public ModelAndView showAccountsByUserId(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
-		ModelAndView resultModelAndView = new ModelAndView(ACCOUNTS_VIEW_PAGE_PATH);
+	public String showAccountsByUserId(HttpSession session, ModelMap model) {
+		String result = ACCOUNTS_VIEW_PAGE_PATH;
 
-		accountManager.addAccountsToResult(request);
-		model.addAttribute(NEW_ACCOUNT_ATTRIBUTE_NAME, new Account());
-		return resultModelAndView;
+		accountsManager.addAccountsToSession(session);
+		initNewAccountInModel(model);
+
+		return result;
 	}
 
 	@RequestMapping(value = GET_ACCOUNT_REVIEW_SERVLET_PATH, method = RequestMethod.GET)
-	public ModelAndView showAccountReviewByAccountId(HttpServletRequest request, HttpServletResponse response) {
-		Map<String, Object> model = accountManager.addAccountReviewByAccountIdToModel(request);
+	public ModelAndView showAccountReviewByAccountId(@RequestParam long selectedAccountId) {
+		ModelAndView result = new ModelAndView(ACCOUNTS_VIEW_PAGE_PATH);
 
-		return getAccountsPageModelAndViewWithAttributes(model);
+		ModelMap modelMap = accountsManager.addAccountReviewByAccountIdToModel(selectedAccountId);
+		result.addAllObjects(modelMap);
+
+		return result;
 	}
 
 	@RequestMapping(value = NEW_ACCOUNT_SERVLET_PATH, method = RequestMethod.GET)
@@ -73,19 +77,19 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = NEW_ACCOUNT_SERVLET_PATH, method = RequestMethod.POST)
-	public String addNewAccount(@ModelAttribute(NEW_ACCOUNT_ATTRIBUTE_NAME) Account newAccount, BindingResult result,
-			SessionStatus status) {
-		String resultPath = REDIRECT_PATH_PART + SHOW_ACCOUNTS_SERVLET_PATH;
-		
-		accountValidator.validate(newAccount, result);
-		
-		if (!result.hasErrors()) {
-			accountManager.saveNewAccount(newAccount);
+	public String addNewAccount(@ModelAttribute(NEW_ACCOUNT_ATTRIBUTE_NAME) Account newAccount,
+			BindingResult bindingResult, SessionStatus status) {
+		String result = REDIRECT_PATH_PART + SHOW_ACCOUNTS_SERVLET_PATH;
+
+		accountValidator.validate(newAccount, bindingResult);
+
+		if (!bindingResult.hasErrors()) {
+			accountsManager.saveNewAccount(newAccount);
 		} else {
-			resultPath = NEW_ACCOUNT_PAGE_PATH;
+			result = NEW_ACCOUNT_PAGE_PATH;
 		}
-		
-		return resultPath;
+
+		return result;
 	}
 
 	@InitBinder
@@ -97,21 +101,18 @@ public class AccountController {
 
 	@ModelAttribute(CURRENCIES_ATTRIBUTE_NAME)
 	public Map<String, Currency> populateCurrencies() {
-		Map<String, Currency> resultCurrencies = accountManager.getCurrencies();
-		return resultCurrencies;
+		Map<String, Currency> result = accountsManager.getCurrencies();
+
+		return result;
 	}
 
-	private ModelAndView getAccountsPageModelAndViewWithAttributes(Map<String, Object> model) {
-		ModelAndView resultModelAndView = new ModelAndView(ACCOUNTS_VIEW_PAGE_PATH);
-
-		resultModelAndView.addAllObjects(model);
-
-		return resultModelAndView;
+	private void initNewAccountInModel(ModelMap model) {
+		model.addAttribute(NEW_ACCOUNT_ATTRIBUTE_NAME, new Account());
 	}
 
 	@Autowired
-	public void setAccountManager(AccountManager accountManager) {
-		this.accountManager = accountManager;
+	public void setAccountManager(AccountsManager accountsManager) {
+		this.accountsManager = accountsManager;
 	}
 
 	@Autowired

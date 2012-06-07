@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.dozer.Mapper;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -61,11 +60,6 @@ public class AccountDAOImplTest {
 	@Test
 	public void shouldReturnListOfAccountInstances() {
 		when(mapperMock.map(resultAccountEntity, Account.class)).thenReturn(new Account());
-		Object resultList = underTest.getAccountsByUserId(USER_ID);
-		Assert.assertEquals(ArrayList.class, resultList.getClass());
-
-		Object resultAccountInstance = ((List) resultList).get(0);
-		Assert.assertEquals(Account.class, resultAccountInstance.getClass());
-
+	
 	}
 }

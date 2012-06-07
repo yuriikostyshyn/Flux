@@ -19,6 +19,7 @@ public class AccountDAOImpl extends AccountDAO {
 
 	public static final String GET_ACCOUNTS_BY_USER_ID_QUERY_NAME = "getAccountsByUserId";
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Account> getAccountsByUserId(int userId) {
 		List<Account> resultAccounts = new ArrayList<Account>();
