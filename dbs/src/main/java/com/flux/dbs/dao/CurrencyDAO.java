@@ -2,8 +2,8 @@ package com.flux.dbs.dao;
 
 import com.flux.domain.Currency;
 
-public abstract class CurrencyDAO extends AbstractDAO{
+public interface CurrencyDAO{
 	
-	public abstract Currency getCurrencyById(Integer currencyId);
+	public Currency getCurrencyById(Integer currencyId);
 	
 }

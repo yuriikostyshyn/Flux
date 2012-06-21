@@ -10,17 +10,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.flux.dbs.dao.UserDAO;
 import com.flux.domain.User;
+import com.flux.domain.utils.DomainUtil;
 import com.flux.persistence.entities.UserEntity;
 
 @Component
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-public class UserDAOImpl extends UserDAO {
+public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
 	public static final String GET_USER_BY_LOGIN_PASSWORD_QUERY_NAME = "userByLoginPass";
 
 	@Override
 	public User getUserByLoginAndPassword(String login, String password) {
-		User resultUser = new User();
+		User resultUser = DomainUtil.emptyUser();
 		
 		Query getUserQuery = entityManager.createNamedQuery(GET_USER_BY_LOGIN_PASSWORD_QUERY_NAME);
 		getUserQuery.setParameter(1, login);

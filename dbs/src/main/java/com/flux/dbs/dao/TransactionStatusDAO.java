@@ -3,8 +3,8 @@ package com.flux.dbs.dao;
 import com.flux.domain.TransactionStatus;
 
 
-public abstract class TransactionStatusDAO extends AbstractDAO{
+public interface TransactionStatusDAO {
 	
-	public abstract TransactionStatus getStatusById(Integer statusId);
+	public TransactionStatus getStatusById(Integer statusId);
 	
 }

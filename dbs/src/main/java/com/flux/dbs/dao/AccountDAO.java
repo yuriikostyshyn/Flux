@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.flux.domain.Account;
 
-public abstract class AccountDAO extends AbstractDAO{
+public interface AccountDAO {
 	
-	public abstract List<Account> getAccountsByUserId(int userId);
+	public List<Account> getAccountsByUserId(int userId);
 	
 }

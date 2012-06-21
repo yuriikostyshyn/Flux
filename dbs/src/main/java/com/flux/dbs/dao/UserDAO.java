@@ -2,7 +2,7 @@ package com.flux.dbs.dao;
 
 import com.flux.domain.User;
 
-public abstract class UserDAO extends AbstractDAO {
+public interface UserDAO {
 
-	public abstract User getUserByLoginAndPassword(String login, String password);
+	public User getUserByLoginAndPassword(String login, String password);
 }

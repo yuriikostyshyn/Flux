@@ -12,7 +12,7 @@ import com.flux.domain.Transaction;
 import com.flux.persistence.entities.TransactionEntity;
 
 @Component
-public class TransactionDAOImpl extends TransactionDAO {
+public class TransactionDAOImpl extends AbstractDAO implements TransactionDAO {
 
 	public static final String GET_TRANSACTIONS_BY_ACCOUNT_TO_ID_QUERY_NAME = "getTransactionsByAccountToId";
 

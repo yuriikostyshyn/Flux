@@ -15,7 +15,7 @@ import com.flux.persistence.entities.AccountEntity;
 
 @Component
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-public class AccountDAOImpl extends AccountDAO {
+public class AccountDAOImpl extends AbstractDAO implements AccountDAO {
 
 	public static final String GET_ACCOUNTS_BY_USER_ID_QUERY_NAME = "getAccountsByUserId";
 

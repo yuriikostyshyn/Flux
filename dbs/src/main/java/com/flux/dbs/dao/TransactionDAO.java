@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.flux.domain.Transaction;
 
-public abstract class TransactionDAO extends AbstractDAO{
+public interface TransactionDAO{
 	
-	public abstract List<Transaction> getTransactionsByAccountToId(Long accountId);
+	public List<Transaction> getTransactionsByAccountToId(Long accountId);
 	
 }

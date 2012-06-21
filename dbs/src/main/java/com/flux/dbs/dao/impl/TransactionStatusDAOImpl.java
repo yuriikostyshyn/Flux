@@ -14,7 +14,7 @@ import com.flux.persistence.entities.TransactionStatusEntity;
 
 @Component
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-public class TransactionStatusDAOImpl extends TransactionStatusDAO{
+public class TransactionStatusDAOImpl extends AbstractDAO implements TransactionStatusDAO{
 
 	public static final String GET_STATUS_BY_ID_QUERY_NAME = "getStatusById";
 

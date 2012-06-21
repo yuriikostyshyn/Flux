@@ -14,7 +14,7 @@ import com.flux.persistence.entities.CurrencyEntity;
 
 @Component
 @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-public class CurrencyDAOImpl extends CurrencyDAO {
+public class CurrencyDAOImpl extends AbstractDAO implements CurrencyDAO {
 
 	public static final String GET_CURRENCY_BY_ID_QUERY_NAME = "getCurrencyById";
 

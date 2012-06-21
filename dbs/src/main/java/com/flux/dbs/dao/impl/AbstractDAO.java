@@ -1,4 +1,4 @@
-package com.flux.dbs.dao;
+package com.flux.dbs.dao.impl;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
