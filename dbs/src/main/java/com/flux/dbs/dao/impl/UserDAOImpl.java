@@ -19,6 +19,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
 	public static final String GET_USER_BY_LOGIN_PASSWORD_QUERY_NAME = "userByLoginPass";
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public User getUserByLoginAndPassword(String login, String password) {
 		User resultUser = DomainUtil.emptyUser();

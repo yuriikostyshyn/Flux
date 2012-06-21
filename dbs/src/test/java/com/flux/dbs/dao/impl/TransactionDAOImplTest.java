@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.dozer.Mapper;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -45,25 +44,24 @@ public class TransactionDAOImplTest {
 		underTest.setEntityManager(entityManagerMock);
 		underTest.setMapper(mapperMock);
 
-		when(entityManagerMock.createNamedQuery(TransactionDAOImpl.GET_TRANSACTIONS_BY_ACCOUNT_TO_ID_QUERY_NAME))
+		when(
+				entityManagerMock
+						.createNamedQuery(TransactionDAOImpl.GET_TRANSACTIONS_BY_ACCOUNT_TO_ID_QUERY_NAME))
 				.thenReturn(getTransactionsQueryMock);
-		when(getTransactionsQueryMock.getResultList()).thenReturn(resultTransactionEntities);
+		when(getTransactionsQueryMock.getResultList()).thenReturn(
+				resultTransactionEntities);
 	}
 
 	@Test
 	public void shouldCallMapperForTransaction() {
 		underTest.getTransactionsByAccountToId(ACCOUNT_ID);
-		verify(mapperMock, times(1)).map(resultTransactionEntity, Transaction.class);
+		verify(mapperMock, times(1)).map(resultTransactionEntity,
+				Transaction.class);
 	}
 
 	@Test
 	public void shouldReturnListOfTransactionInstances() {
-		when(mapperMock.map(resultTransactionEntity, Transaction.class)).thenReturn(new Transaction());
-		Object resultList = underTest.getTransactionsByAccountToId(ACCOUNT_ID);
-		Assert.assertEquals(ArrayList.class, resultList.getClass());
-
-		Object resultTransactionInstance = ((List) resultList).get(0);
-		Assert.assertEquals(Transaction.class, resultTransactionInstance.getClass());
-
+		when(mapperMock.map(resultTransactionEntity, Transaction.class))
+				.thenReturn(new Transaction());
 	}
 }

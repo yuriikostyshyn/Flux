@@ -18,6 +18,7 @@ public class TransactionStatusDAOImpl extends AbstractDAO implements Transaction
 
 	public static final String GET_STATUS_BY_ID_QUERY_NAME = "getStatusById";
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public TransactionStatus getStatusById(Integer statusId) {
 		TransactionStatus resultTransactionStatus = new TransactionStatus();

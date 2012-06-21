@@ -18,6 +18,7 @@ public class CurrencyDAOImpl extends AbstractDAO implements CurrencyDAO {
 
 	public static final String GET_CURRENCY_BY_ID_QUERY_NAME = "getCurrencyById";
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Currency getCurrencyById(Integer currencyId) {
 		Currency resultCurrency = new Currency();

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.flux.domain.User;
 import com.flux.provider.UserProvider;
 
+@Component
 public class UserProviderImpl implements UserProvider {
 
 	public User getUserByLoginAndPassword(String login, String password) {
