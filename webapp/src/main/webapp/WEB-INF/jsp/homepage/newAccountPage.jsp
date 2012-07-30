@@ -38,6 +38,10 @@
 					<td>	<form:errors path="securityKey" cssClass="form-error"/>	</td>
 				</tr>
 				<tr>
+					<td></td>
+					<td>	<form:hidden path="user"/>	</td>
+				</tr>
+				<tr>
 					<td colspan="3">	<input type="submit" value="Save"/>	</td>
 				</tr>
 			</table>

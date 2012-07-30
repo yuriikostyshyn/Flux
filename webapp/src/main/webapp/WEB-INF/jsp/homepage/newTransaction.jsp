@@ -7,7 +7,7 @@
 			<table>
 				<tr>
 					<td>Sender account id: </td>
-					<td>	${newTransaction.accountFrom.accountId}		</td>
+					<td>	<form:input path="accountFrom" style="width: 35px;"/></td>
 				</tr>
 				<tr>
 				</tr>
