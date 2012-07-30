@@ -9,13 +9,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.flux.domain.User;
-import com.flux.domain.utils.DomainUtil;
 import com.flux.manager.AuthenticationManager;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
 
 public class LoginControllerTest {
 
