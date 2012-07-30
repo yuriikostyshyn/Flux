@@ -30,7 +30,6 @@ public class AccountsManager {
 
 	private AccountProvider accountProvider;
 	private AccountDataProvider accountDataProvider;
-	private CurrencyProvider currencyProvider;
 	
 	public void addAccountsToSession(HttpSession session) {
 		List<Account> accounts = getAccounts(session);
@@ -51,13 +50,7 @@ public class AccountsManager {
 		}
 	}
 
-	public Map<String, Currency> getCurrencies() {
-		Map<String, Currency> resultCurrencies = currencyProvider.getAllCurrenciesMap();
-
-		return resultCurrencies;
-	}
-
-	private List<Account> getAccounts(HttpSession session) {
+		private List<Account> getAccounts(HttpSession session) {
 		List<Account> accounts = Collections.emptyList();
 		try {
 			int userId = getUserId(session);
@@ -113,9 +106,6 @@ public class AccountsManager {
 		this.accountDataProvider = accountDataProvider;
 	}
 
-	@Autowired
-	public void setCurrencyProvider(CurrencyProvider currencyProvider) {
-		this.currencyProvider = currencyProvider;
-	}
+	
 	
 }

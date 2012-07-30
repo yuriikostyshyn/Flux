@@ -12,7 +12,7 @@ import com.flux.domain.Account;
 
 @Component
 public class AccountPropertyEditor extends PropertyEditorSupport {
-	Map<Long, Account> accounts;
+	Map<String, Account> accounts;
 
 	public String getAsText() {
 		String result = "empty account";
@@ -33,14 +33,16 @@ public class AccountPropertyEditor extends PropertyEditorSupport {
 	}
 
 	public void setAccounts(List<Account> accounts) {
-		Map<Long, Account> result = new HashMap<Long, Account>();
+		Map<String, Account> result = new HashMap<String, Account>();
 
 		ListIterator<Account> accountsIterator = accounts.listIterator();
 
 		while (accountsIterator.hasNext()) {
 			Account currentAccount = accountsIterator.next();
 
-			result.put(currentAccount.getAccountId(), currentAccount);
+			Long currentAccountId = currentAccount.getAccountId();
+			
+			result.put(currentAccountId.toString(), currentAccount);
 		}
 		this.accounts = result;
 	}

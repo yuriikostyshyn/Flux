@@ -13,7 +13,7 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQueries({ @NamedQuery(name = "userByLoginPass", query = "FROM UserEntity u WHERE u.login=? AND u.password=?") })
+@NamedQueries({ @NamedQuery(name = "userByLoginPass", query = "FROM UserEntity u WHERE u.login=? AND u.password=?") , @NamedQuery(name = "allUsers", query = "FROM UserEntity u")})
 @Table(name = "user")
 public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

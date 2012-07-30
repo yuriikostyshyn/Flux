@@ -49,8 +49,6 @@ public class AccountsManagerTest {
 	private AccountProviderImpl mockAccountProvider;
 	@Mock
 	private AccountDataProviderImpl mockAccountDataProvider;
-	@Mock
-	private CurrencyProvider mockCurrencyProvider;
 
 	private AccountsManager underTest;
 
@@ -61,56 +59,45 @@ public class AccountsManagerTest {
 		MockitoAnnotations.initMocks(this);
 		underTest.setAccountProvider(mockAccountProvider);
 		underTest.setAccountDataProvider(mockAccountDataProvider);
-		underTest.setCurrencyProvider(mockCurrencyProvider);
 
 		Mockito.when(mockRequest.getSession()).thenReturn(mockSession);
 	}
 
 	@Test
 	public void shouldAddAccountsIfUserIdIsCorrect() {
-		Mockito.when(
-				mockSession.getAttribute(AccountsManager.USER_ATTRIBUTE_NAME))
-				.thenReturn(mockUser);
+		Mockito.when(mockSession.getAttribute(AccountsManager.USER_ATTRIBUTE_NAME)).thenReturn(mockUser);
 		Mockito.when(mockUser.getUserId()).thenReturn(USER_ID);
-		Mockito.when(mockAccountProvider.getAccountsByUserId(USER_ID))
-				.thenReturn(mockAccounts);
+		Mockito.when(mockAccountProvider.getAccountsByUserId(USER_ID)).thenReturn(mockAccounts);
 
 		underTest.addAccountsToSession(mockSession);
 
-		Mockito.verify(mockSession).setAttribute(
-				AccountsManager.ACCOUNTS_ATTRIBUTE_NAME, mockAccounts);
+		Mockito.verify(mockSession).setAttribute(AccountsManager.ACCOUNTS_ATTRIBUTE_NAME, mockAccounts);
 	}
 
 	@Test
 	public void shouldAddEmptyListToModelIfUserIdIsAbsent() {
 		underTest.addAccountsToSession(mockSession);
 
-		Mockito.verify(mockSession)
-				.setAttribute(AccountsManager.ACCOUNTS_ATTRIBUTE_NAME,
-						Collections.EMPTY_LIST);
+		Mockito.verify(mockSession).setAttribute(AccountsManager.ACCOUNTS_ATTRIBUTE_NAME, Collections.EMPTY_LIST);
 	}
 
 	@Test
 	public void shouldAddEmptyListToModelIfUserIdHasIncorrectType() {
-		Mockito.when(
-				mockSession.getAttribute(AccountsManager.USER_ATTRIBUTE_NAME))
-				.thenReturn(INCORRECT_TYPED_ATTRIBUTE_NAME);
+		Mockito.when(mockSession.getAttribute(AccountsManager.USER_ATTRIBUTE_NAME)).thenReturn(
+				INCORRECT_TYPED_ATTRIBUTE_NAME);
 
 		underTest.addAccountsToSession(mockSession);
 
-		Mockito.verify(mockSession)
-				.setAttribute(AccountsManager.ACCOUNTS_ATTRIBUTE_NAME,
-						Collections.EMPTY_LIST);
+		Mockito.verify(mockSession).setAttribute(AccountsManager.ACCOUNTS_ATTRIBUTE_NAME, Collections.EMPTY_LIST);
 	}
 
 	@Test
 	public void shouldCallAccountDataProviderToGetReviewAndPutItIntoResult() {
-		when(mockAccountDataProvider.getAccountById(SELECTED_ACCOUNT_ID))
-				.thenReturn(mockAccount);
+		when(mockAccountDataProvider.getAccountById(SELECTED_ACCOUNT_ID)).thenReturn(mockAccount);
 
 		ModelMap actualModel = underTest.addAccountReviewByAccountIdToModel(SELECTED_ACCOUNT_ID);
 		boolean isAccountPresentInModel = actualModel.get(AccountsManager.SELECTED_ACCOUNT_ATTRIBUTE_NAME) == mockAccount;
-		
+
 		verify(mockAccountDataProvider).getAccountById(SELECTED_ACCOUNT_ID);
 		assertTrue(isAccountPresentInModel);
 
@@ -121,15 +108,4 @@ public class AccountsManagerTest {
 		underTest.saveNewAccount(mockAccount);
 		Mockito.verify(mockAccountProvider).saveNewAccount(mockAccount);
 	}
-
-	@Test
-	public void shouldCallCurrencyProviderToGetAllCurrenciesMap() {
-		Mockito.when(mockCurrencyProvider.getAllCurrenciesMap()).thenReturn(
-				mockCurrencies);
-
-		Map<String, Currency> currencies = underTest.getCurrencies();
-
-		Assert.assertEquals(mockCurrencies, currencies);
-	}
-
 }

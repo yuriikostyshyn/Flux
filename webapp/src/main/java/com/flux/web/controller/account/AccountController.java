@@ -19,14 +19,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.flux.domain.Account;
 import com.flux.domain.Currency;
+import com.flux.domain.User;
 import com.flux.manager.AccountsManager;
+import com.flux.manager.AuthenticationManager;
+import com.flux.manager.CurrencyManager;
+import com.flux.manager.UsersManager;
 import com.flux.web.util.propertyeditor.CurrencyPropertyEditor;
+import com.flux.web.util.propertyeditor.UserPropertyEditor;
 import com.flux.web.util.validator.AccountValidator;
 
 @Controller
 public class AccountController {
 
 	public static final String CURRENCIES_ATTRIBUTE_NAME = "currencies";
+
+	public static final String USERS_ATTRIBUTE_NAME = "users";
 
 	public static final String NEW_ACCOUNT_ATTRIBUTE_NAME = "newAccount";
 
@@ -43,8 +50,11 @@ public class AccountController {
 	public static final String NEW_ACCOUNT_PAGE_PATH = "homepage/newAccountPage";
 
 	private AccountsManager accountsManager;
+	private CurrencyManager currenciesManager;
 	private CurrencyPropertyEditor currencyEditor;
 	private AccountValidator accountValidator;
+	private UserPropertyEditor userEditor;
+	private UsersManager usersManager;
 
 	@RequestMapping(value = SHOW_ACCOUNTS_SERVLET_PATH, method = RequestMethod.GET)
 	public String showAccountsByUserId(HttpSession session, ModelMap model) {
@@ -67,10 +77,14 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = NEW_ACCOUNT_SERVLET_PATH, method = RequestMethod.GET)
-	public String initNewAccountForm(ModelMap model) {
+	public String initNewAccountForm(ModelMap model, HttpSession session) {
 
 		Account newAccount = new Account();
 		newAccount.setCurrency(new Currency());
+		
+		User currentUser = (User) session.getAttribute(AuthenticationManager.USER_ATTRIBUTE_NAME);
+		newAccount.setUser(currentUser);
+		
 		model.addAttribute(NEW_ACCOUNT_ATTRIBUTE_NAME, newAccount);
 
 		return NEW_ACCOUNT_PAGE_PATH;
@@ -78,7 +92,7 @@ public class AccountController {
 
 	@RequestMapping(value = NEW_ACCOUNT_SERVLET_PATH, method = RequestMethod.POST)
 	public String addNewAccount(@ModelAttribute(NEW_ACCOUNT_ATTRIBUTE_NAME) Account newAccount,
-			BindingResult bindingResult, SessionStatus status) {
+			BindingResult bindingResult, SessionStatus status, HttpSession session) {
 		String result = REDIRECT_PATH_PART + SHOW_ACCOUNTS_SERVLET_PATH;
 
 		accountValidator.validate(newAccount, bindingResult);
@@ -96,13 +110,23 @@ public class AccountController {
 	public void initBinder(WebDataBinder binder) {
 
 		currencyEditor.setCurrencies(populateCurrencies());
+		userEditor.setUsers(populateUsers());
 		binder.registerCustomEditor(Currency.class, currencyEditor);
+		binder.registerCustomEditor(User.class, userEditor);
 	}
 
-	@ModelAttribute(CURRENCIES_ATTRIBUTE_NAME)
-	public Map<String, Currency> populateCurrencies() {
-		Map<String, Currency> result = accountsManager.getCurrencies();
+	
 
+	@ModelAttribute(CURRENCIES_ATTRIBUTE_NAME)
+	protected Map<String, Currency> populateCurrencies() {
+		Map<String, Currency> result = currenciesManager.getCurrencies();
+
+		return result;
+	}
+	
+	@ModelAttribute(USERS_ATTRIBUTE_NAME)
+	protected Map<String, User> populateUsers() {
+		Map<String, User> result = usersManager.getUsers();
 		return result;
 	}
 
@@ -116,6 +140,11 @@ public class AccountController {
 	}
 
 	@Autowired
+	public void setCurrencyManager(CurrencyManager currenciesManager) {
+		this.currenciesManager = currenciesManager;
+	}
+
+	@Autowired
 	public void setCurrencyEditor(CurrencyPropertyEditor currencyEditor) {
 		this.currencyEditor = currencyEditor;
 	}
@@ -124,5 +153,16 @@ public class AccountController {
 	public void setAccountValidator(AccountValidator accountValidator) {
 		this.accountValidator = accountValidator;
 	}
+	
+	@Autowired
+	public void setUserEditor(UserPropertyEditor userEditor) {
+		this.userEditor = userEditor;
+	}
 
+	@Autowired
+	public void setUsersManager(UsersManager usersManager) {
+		this.usersManager = usersManager;
+	}
+
+	
 }
